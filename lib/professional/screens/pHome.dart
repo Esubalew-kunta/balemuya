@@ -1,10 +1,10 @@
+import 'package:blaemuya/widgets/large_job_card.dart';
+import 'package:blaemuya/widgets/slider_button.dart';
 import 'package:blaemuya/widgets/small_button_bright.dart';
 import 'package:blaemuya/widgets/small_button_dark.dart';
+import 'package:blaemuya/widgets/small_job_card.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
-
-
-
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -14,24 +14,23 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         elevation: 0,
-        leading: const CircleAvatar(
-          backgroundImage: AssetImage('assets/images/maintainance.jpg'), 
+        leading: const Padding(
+          padding: EdgeInsets.only(
+              left:
+                  8.0), // Adds padding to the left to move the image to the right
+          child: CircleAvatar(
+            backgroundImage: AssetImage('assets/images/maintainance.jpg'),
+          ),
         ),
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Hi Abebe', style: TextStyle(color: Colors.white)),
-            Row(
-              children: [
-                Icon(Icons.circle, color: Colors.green, size: 12),
-                SizedBox(width: 4),
-                Text('active', style: TextStyle(color: Colors.white, fontSize: 12)),
-              ],
-            ),
+            const Text('Hi Abebe',
+                style: TextStyle(color: Colors.white, fontSize: 13)),
+            DropdownStatus(),
           ],
         ),
         actions: const [
-          
           Icon(Icons.notifications, color: Colors.white),
           SizedBox(width: 16),
         ],
@@ -50,132 +49,263 @@ class HomeScreen extends StatelessWidget {
                   Text('Bahir Dar, poly'),
                 ],
               ),
-              ElevatedButton.icon(
+              TextButton.icon(
                 onPressed: () {},
                 icon: Icon(Icons.refresh, size: 16),
                 label: Text('Update location'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[900],
-                  textStyle: TextStyle(fontSize: 14),
+                  textStyle: TextStyle(
+                      fontSize: 14, color: const Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ],
           ),
           SizedBox(height: 16),
-          
-          // Banner Section
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/maintainance.jpg'), 
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Row(
-              
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children:[
 
-                SmallButtonDark(
-                    onTap: () {
-                     
-                    },
-                    text: 'Find Gigs', isSelected: true,
-                    
-                  ),
-              ] 
-            ),
-          ),
+          //slider Section
+          HeroSection(),
+
           SizedBox(height: 16),
-          
+
           // New Jobs Section
-          Text('New jobs', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('New jobs',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              TextButton.icon(
+                onPressed: () {},
+                label: Text('See all'),
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(
+                      fontSize: 14, color: const Color.fromARGB(255, 0, 0, 0)),
+                ),
+              ),
+            ],
+          ),
           SizedBox(height: 8),
-          JobCard(
-            title: 'Plumbing repair',
-            urgency: 'Urgent',
-            time: '2 hr ago',
-            distance: '2 Km away',
-            description: 'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
-            actionButton: ElevatedButton(
-              onPressed: () {},
-              child: Text('Apply'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SmallJobCard(
+                  title: 'Plumbing repair',
+                  urgency: 'Urgent',
+                  time: '2 hr ago',
+                  distance: '2 Km away',
+                  description:
+                      'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
+                  actionButton: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Apply',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(40, 80, 200, 120),
+                      side: BorderSide(
+                          color: const Color.fromARGB(100, 80, 200, 120)),
+                      minimumSize: Size(100, 25),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                ),
+                SmallJobCard(
+                  title: ' repair',
+                  urgency: 'Urgent',
+                  time: '2 hr ago',
+                  distance: '2 Km away',
+                  description:
+                      'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
+                  actionButton: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Apply',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(40, 80, 200, 120),
+                      side: BorderSide(
+                          color: const Color.fromARGB(100, 80, 200, 120)),
+                      minimumSize: Size(100, 25),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+
           SizedBox(height: 16),
 
           // Accepted Jobs Section
-          Text('Accepted', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
-          JobCard(
-            title: 'Plumbing repair',
-            urgency: 'Urgent',
-            time: '2 hr ago',
-            distance: '2 Km away',
-            description: 'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
-            actionButton: TextButton(
-              onPressed: () {},
-              child: Text('Details', style: TextStyle(color: Colors.blue)),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Accepted',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              TextButton.icon(
+                onPressed: () {},
+                label: Text('See all'),
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(
+                      fontSize: 14, color: const Color.fromARGB(255, 0, 0, 0)),
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: 8),
+          SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(children: [
+                LargeJobCard(
+                  title: 'Electrical repair',
+                  urgency: 'Urgent',
+                  time: '2 hr ago',
+                  distance: '2 Km away',
+                  description:
+                      'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
+                  actionButton: TextButton(
+                    onPressed: () {},
+                    child:
+                        Text('Details', style: TextStyle(color: Colors.blue)),
+                  ),
+                ),
+                LargeJobCard(
+                  title: 'Electrical repair',
+                  urgency: 'Urgent',
+                  time: '2 hr ago',
+                  distance: '2 Km away',
+                  description:
+                      'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
+                  actionButton: TextButton(
+                    onPressed: () {},
+                    child:
+                        Text('Details', style: TextStyle(color: Colors.blue)),
+                  ),
+                )
+              ])),
         ],
       ),
     );
   }
 }
 
-class JobCard extends StatelessWidget {
-  final String title;
-  final String urgency;
-  final String time;
-  final String distance;
-  final String description;
-  final Widget actionButton;
+//drop down status
+class DropdownStatus extends StatefulWidget {
+  @override
+  _DropdownStatusState createState() => _DropdownStatusState();
+}
 
-  JobCard({
-    required this.title,
-    required this.urgency,
-    required this.time,
-    required this.distance,
-    required this.description,
-    required this.actionButton,
-  });
+class _DropdownStatusState extends State<DropdownStatus> {
+  String status = 'active';
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(urgency, style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-              ],
+    return Row(
+      children: [
+        DropdownButton<String>(
+          isExpanded: false,
+          value: status,
+          // underline: SizedBox(),
+          dropdownColor: Colors.blue[900],
+          style: const TextStyle(color: Colors.white, fontSize: 12),
+          items: const [
+            DropdownMenuItem(
+              value: 'active',
+              child: Text('active', style: TextStyle(color: Colors.green)),
             ),
-            SizedBox(height: 4),
-            Row(
-              children: [
-                Text(time, style: TextStyle(fontSize: 12, color: Colors.grey)),
-                SizedBox(width: 16),
-                Text(distance, style: TextStyle(fontSize: 12, color: Colors.grey)),
-              ],
+            DropdownMenuItem(
+              value: 'deactivated',
+              child: Text('deactivated', style: TextStyle(color: Colors.red)),
             ),
-            SizedBox(height: 8),
-            Text(description, style: TextStyle(fontSize: 14)),
-            SizedBox(height: 8),
-            Align(alignment: Alignment.centerRight, child: actionButton),
           ],
+          onChanged: (value) {
+            setState(() {
+              status = value!;
+            });
+          },
         ),
+      ],
+    );
+  }
+}
+
+class HeroSection extends StatelessWidget {
+  final List<String> images = [
+    'assets/images/maintainance.jpg',
+    'assets/images/mechanic.jpg',
+    'assets/images/electrician.jpg',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 200.0, // Set the height of the carousel
+        autoPlay: true, // Enable automatic sliding
+        autoPlayInterval: Duration(seconds: 3), // Set the interval time
+        enlargeCenterPage: true, // Highlight the current image
+        viewportFraction: 1.0, // Show one image at a time
       ),
+      items: images.map((imagePath) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Stack(
+                  children: [
+                    const Positioned(
+                      top: 8,
+                      left: 8,
+                      child: Text(
+                        'Become a service\n' ' seller',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          height: 1.2,
+                          fontSize: 40,
+                          wordSpacing: 2,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 16,
+                      left: 16,
+                      child: SliderButton(
+                        onTap: () {},
+                        text: 'Find Gigs',
+                        isSelected: false,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }).toList(),
     );
   }
 }

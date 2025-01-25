@@ -2,11 +2,11 @@
 import 'package:blaemuya/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class SmallButtonDark extends StatelessWidget {
+class SliderButton extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
   final bool isSelected;
-  const SmallButtonDark({
+  const SliderButton({
     super.key,
     required this.onTap,
     required this.text,
@@ -21,13 +21,13 @@ class SmallButtonDark extends StatelessWidget {
         padding: const EdgeInsets.all(0.0),
         child: Container(
           width: 125,
-          height: 35,
+          height: 50,
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 2),
           decoration: BoxDecoration(
           color: isSelected ? const Color.fromARGB(255, 184, 188, 204) : const Color.fromARGB(0, 255, 255, 255),
           border: Border.all(
-            color: const Color.fromRGBO(9, 19, 58, 1),
+            color: const Color.fromARGB(255, 255, 255, 255),
             width: 1.5,
           ),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -36,7 +36,7 @@ class SmallButtonDark extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 13,
-              color: isSelected ? Colors.white : const Color.fromRGBO(9, 19, 58, 1),
+              color: isSelected ? Colors.white : const Color.fromARGB(255, 255, 255, 255),
               fontWeight: FontWeight.bold,
             ),
           ),

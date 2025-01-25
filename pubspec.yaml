@@ -38,6 +38,7 @@ dependencies:
   animated_snack_bar: ^0.4.0
   flutter_riverpod: ^2.6.1
   pin_code_fields: ^8.0.1
+  carousel_slider: ^5.0.0
 
 
 dev_dependencies:
