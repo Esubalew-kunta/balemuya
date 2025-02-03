@@ -103,7 +103,7 @@ class _PasswordresetbyphoneState extends ConsumerState<Passwordresetbyphone> {
                       ),
                       const SizedBox(height: 40),
                       CustomTextFormField(
-                        // controller: _emailController,
+                        controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         labelText: '09/07...',
                         prefixIcon: Icons.phone,

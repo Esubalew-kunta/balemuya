@@ -136,7 +136,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           const SizedBox(height: 80),
                           CustomTextFormField(
-                            // controller: _emailController,
+                            controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             labelText: 'phone 09...',
                             prefixIcon: Icons.phone,
@@ -195,44 +195,43 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               );
                             },
                             text: "Next",
-                          ), const SizedBox(height: 30),
+                          ),
+                          const SizedBox(height: 30),
                           Row(
                             children: [
                               const Text(
-                            "Don’t have an account ? ",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              letterSpacing: 1.2,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                         
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>  OnboardingScreenThree(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                "Sign up",
+                                "Don’t have an account ? ",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: Color.fromARGB(255, 9, 19, 58),
-                                  fontWeight: FontWeight.bold,
-                                  
+                                  letterSpacing: 1.2,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
-                            ),
-                          ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            OnboardingScreenThree(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    "Sign up",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 9, 19, 58),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                           
                         ],
                       ),
                     ),

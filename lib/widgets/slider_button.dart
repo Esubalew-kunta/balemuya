@@ -20,8 +20,8 @@ class SliderButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(0.0),
         child: Container(
-          width: 125,
-          height: 50,
+          width: 115,
+          height: 40,
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 2),
           decoration: BoxDecoration(

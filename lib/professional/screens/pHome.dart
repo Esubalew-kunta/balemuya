@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: ListView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         children: [
           // Location Section
           Row(
@@ -45,17 +45,17 @@ class HomeScreen extends StatelessWidget {
               Row(
                 children: [
                   Icon(Icons.location_on, color: Colors.blue[900]),
-                  SizedBox(width: 8),
-                  Text('Bahir Dar, poly'),
+                  const SizedBox(width: 8),
+                  const Text('Bahir Dar, poly'),
                 ],
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: Icon(Icons.refresh, size: 16),
+                icon: const Icon(Icons.refresh, size: 16),
                 label: Text('Update location'),
                 style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(
-                      fontSize: 14, color: const Color.fromARGB(255, 0, 0, 0)),
+                  textStyle: const TextStyle(
+                      fontSize: 14, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ],
@@ -71,14 +71,14 @@ class HomeScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('New jobs',
+              const Text('New jobs',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               TextButton.icon(
                 onPressed: () {},
                 label: Text('See all'),
                 style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(
-                      fontSize: 14, color: const Color.fromARGB(255, 0, 0, 0)),
+                  textStyle: const TextStyle(
+                      fontSize: 14, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ],
@@ -170,7 +170,7 @@ class HomeScreen extends StatelessWidget {
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(children: [
-                LargeJobCard(
+                LargeJobCard(                                                               
                   title: 'Electrical repair',
                   urgency: 'Urgent',
                   time: '2 hr ago',
@@ -258,7 +258,7 @@ class HeroSection extends StatelessWidget {
         autoPlay: true, // Enable automatic sliding
         autoPlayInterval: Duration(seconds: 3), // Set the interval time
         enlargeCenterPage: true, // Highlight the current image
-        viewportFraction: 1.0, // Show one image at a time
+        viewportFraction: 0.87, // Show one image at a time
       ),
       items: images.map((imagePath) {
         return Builder(
@@ -273,7 +273,7 @@ class HeroSection extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Stack(
                   children: [
                     const Positioned(
@@ -285,14 +285,14 @@ class HeroSection extends StatelessWidget {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
-                          fontSize: 40,
+                          fontSize: 28,
                           wordSpacing: 2,
                         ),
                       ),
                     ),
                     Positioned(
-                      bottom: 16,
-                      left: 16,
+                      bottom: 8,
+                      left: 8,
                       child: SliderButton(
                         onTap: () {},
                         text: 'Find Gigs',

@@ -5,6 +5,7 @@ import 'package:blaemuya/common/screens/onboardingScreenTwo.dart';
 import 'package:blaemuya/common/screens/passwordResetByEmail.dart';
 import 'package:blaemuya/common/screens/signup.dart';
 import 'package:blaemuya/common/screens/splash.dart';
+import 'package:blaemuya/professional/screens/bottom_nav.dart';
 import 'package:blaemuya/professional/screens/pHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +31,17 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  Signup(),
+      home:   Signup(),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
