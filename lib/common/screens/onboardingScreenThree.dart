@@ -2,6 +2,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:blaemuya/common/screens/login.dart';
 import 'package:blaemuya/common/screens/onboardingScreenOne.dart';
 import 'package:blaemuya/common/screens/onboardingScreenTwo.dart';
+import 'package:blaemuya/common/screens/signup.dart';
 
 import 'package:blaemuya/widgets/large_button.dart';
 import 'package:blaemuya/widgets/password_field.dart';
@@ -20,27 +21,23 @@ class OnboardingScreenThree extends StatefulWidget {
 class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
   String selectedRole = ''; // To store the selected role
 
-  void navigateToSignUp(BuildContext context) {
-    if (selectedRole == 'Customer') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    } else if (selectedRole == 'Professional') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    } else {
-      // Show a message to select a role
-     showCustomSnackBar(
-          context,
-          title: 'Info',
-          message: "Select your role",
-          type: AnimatedSnackBarType.info,
-        );
-    }
+ void navigateToSignUp(BuildContext context) {
+  if (selectedRole.isNotEmpty) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Signup(role: selectedRole), 
+      ),
+    );
+  } else {
+    showCustomSnackBar(
+      context,
+      title: 'Info',
+      message: "Select your role",
+      type: AnimatedSnackBarType.info,
+    );
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -107,11 +104,11 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
                   SmallButtonDark(
                     onTap: () {
                       setState(() {
-                        selectedRole = 'Customer';
+                        selectedRole = 'customer';
                       });
                     },
                     text: 'Customer',
-                    isSelected: selectedRole == 'Customer',
+                    isSelected: selectedRole == 'customer',
                   ),
                   const SizedBox(width: 20),
 
@@ -119,11 +116,11 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
                   SmallButtonBright(
                     onTap: () {
                       setState(() {
-                        selectedRole = 'Professional';
+                        selectedRole = 'professional';
                       });
                     },
                     text: 'Professional',
-                    isSelected: selectedRole == 'Professional',
+                    isSelected: selectedRole == 'professional',
                   ),
                 ],
               ),

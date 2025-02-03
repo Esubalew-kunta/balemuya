@@ -17,7 +17,7 @@ class _ProfessionalBottomBarState extends ConsumerState<ProfessionalBottomBar> {
  
  final List<Widget>  _pages = [
     HomeScreen(),
-    Signup(),
+    Placeholder(),
     Placeholder(),
     Placeholder(),
     Placeholder(),
