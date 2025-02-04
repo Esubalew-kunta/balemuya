@@ -47,70 +47,70 @@ class _SignupState extends ConsumerState<Signup> {
     return null;
   }
 
- void _submitData() async {
-  if ((_formKey1.currentState?.validate() ?? false) &&
-      (_formKey2.currentState?.validate() ?? false)) {
-    try {
-      // Show loading dialog
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const Center(child: LoadingIndicatorWidget()),
-      );
+  void _submitData() async {
+    if ((_formKey1.currentState?.validate() ?? false) &&
+        (_formKey2.currentState?.validate() ?? false)) {
+      try {
+        // Show loading dialog
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => const Center(child: LoadingIndicatorWidget()),
+        );
 
-      final userData = {
-        "first_name": _firstNameController.text.trim(),
-        "middle_name": _middleNameController.text.trim(),
-        "last_name": _lastNameController.text.trim(),
-        "gender": _selectedGender,
-        "phone_number": _phoneController.text.trim(),
-        "email": _emailController.text.trim(),
-        "password": _newPasswordController.text.trim(),
-        "user_type": widget.role,
-      };
+        final userData = {
+          "first_name": _firstNameController.text.trim(),
+          "middle_name": _middleNameController.text.trim(),
+          "last_name": _lastNameController.text.trim(),
+          "gender": _selectedGender,
+          "phone_number": _phoneController.text.trim(),
+          "email": _emailController.text.trim(),
+          "password": _newPasswordController.text.trim(),
+          "user_type": widget.role,
+        };
 
-      // Call the controller (Now it returns a response)
-      final response = await ref.read(authControllerProvider).registerUser(userData);
+        // Call the controller (Now it returns a response)
+        final response =
+            await ref.read(authControllerProvider).registerUser(userData);
 
-      // Remove loading indicator
-      if (mounted) Navigator.pop(context);
+        // Remove loading indicator
+        if (mounted) Navigator.pop(context);
 
-      if (response["success"] == true) {
-        // Show success message
-        AnimatedSnackBar.material(
-          response["message"],
-          type: AnimatedSnackBarType.success,
-        ).show(context);
+        if (response["success"] == true) {
+          // Show success message
+          AnimatedSnackBar.material(
+            response["message"],
+            type: AnimatedSnackBarType.success,
+          ).show(context);
 
-        // Redirect to login after 2 seconds
-        if (mounted) {
-          Future.delayed(const Duration(seconds: 2), () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-            );
-          });
+          // Redirect to login after 2 seconds
+          if (mounted) {
+            Future.delayed(const Duration(seconds: 2), () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+              );
+            });
+          }
+        } else {
+          // Show error message
+          AnimatedSnackBar.material(
+            response["message"],
+            type: AnimatedSnackBarType.error,
+          ).show(context);
         }
-      } else {
-        // Show error message
+      } catch (e) {
+        // Remove loading indicator
+        if (mounted) Navigator.pop(context);
+
+        // Show error snackbar
         AnimatedSnackBar.material(
-          response["message"],
+          "An unexpected error occurred. Please try again.",
           type: AnimatedSnackBarType.error,
         ).show(context);
       }
-    } catch (e) {
-      // Remove loading indicator
-      if (mounted) Navigator.pop(context);
-
-      // Show error snackbar
-      AnimatedSnackBar.material(
-        "An unexpected error occurred. Please try again.",
-        type: AnimatedSnackBarType.error,
-      ).show(context);
     }
   }
-}
-
 
   // List of steps
   List<Step> stepList() => [
@@ -128,12 +128,14 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'First Name',
                   prefixIcon: Icons.person,
                   keyboardType: TextInputType.name,
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Please enter your name';
-                  //   }
-                  //   return null;
-                  // },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+                      return 'Only letters are allowed';
+                    }
+                    return null;
+                  },
                   onChanged: (value) {
                     _firstNameController.text = value;
                     print("Text changed: $value");
@@ -145,9 +147,18 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'Middle Name',
                   prefixIcon: Icons.person,
                   keyboardType: TextInputType.name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+                      return 'Only letters are allowed';
+                    }
+                    return null;
+                  },
                   onChanged: (value) {
                     _middleNameController.text = value;
                     print("Text changed: $value");
+                    
                   },
                 ),
                 const SizedBox(height: 10),
@@ -156,6 +167,14 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'Last Name',
                   prefixIcon: Icons.person,
                   keyboardType: TextInputType.name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+                      return 'Only letters are allowed';
+                    }
+                    return null;
+                  },
                   onChanged: (value) {
                     _lastNameController.text = value;
                     print("Text changed: $value");
@@ -196,6 +215,16 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'Phone Number',
                   prefixIcon: Icons.phone,
                   keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your phone number';
+                    } else if (value.length > 10 || value.length < 10) {
+                      return 'Phone mumber must be 10 digits';
+                    } else if (!RegExp(r'^(09|07)[0-9]{8}$').hasMatch(value)) {
+                      return 'Please start  with 09 or 07 ';
+                    }
+                    return null;
+                  },
                   onChanged: (value) {
                     _phoneController.text = value;
                     print("Text changed: $value");
@@ -207,9 +236,18 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'Email',
                   prefixIcon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                  .hasMatch(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
                   onChanged: (value) {
                     _emailController.text = value;
-                    print("Text changed: $value");
+                   
                   },
                 ),
                 const SizedBox(height: 10),
