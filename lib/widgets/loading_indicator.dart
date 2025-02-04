@@ -3,15 +3,15 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 
 class LoadingIndicatorWidget extends StatelessWidget {
-  // final double size;
-  // final Color color;
+  final double size;
+  final Color color;
 
-  // const LoadingIndicatorWidget({
-  //   super.key,
-  //   this.size = 60.0, // default size
-  //   this.color = const Color.fromARGB(255, 255, 255, 255), // default colo
+  const LoadingIndicatorWidget({
+    super.key,
+    this.size = 60.0, // default size
+    this.color = const Color.fromARGB(255, 255, 255, 255), // default colo
 
-  // });
+  });
 
   @override
   Widget build(BuildContext context) {

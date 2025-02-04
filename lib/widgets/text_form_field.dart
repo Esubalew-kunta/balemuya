@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final IconData prefixIcon;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final void Function(String)? onChanged;
   
 
   // Constructor
@@ -18,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.prefixIcon,
     this.validator,
     this.obscureText = false,
+     this.onChanged,
   
     
   }) : super(key: key);
@@ -51,6 +53,7 @@ class CustomTextFormField extends StatelessWidget {
         
       ),
       validator: validator,
+      onChanged: onChanged, 
     );
   }
 }
