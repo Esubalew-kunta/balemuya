@@ -6,6 +6,7 @@ class CustomGenderDropdown extends StatelessWidget {
   final String? value;
   final List<DropdownMenuItem<String>> items;
   final ValueChanged<String?> onChanged;
+   final FormFieldValidator<String>? validator; 
 
   const CustomGenderDropdown({
     Key? key,
@@ -14,6 +15,7 @@ class CustomGenderDropdown extends StatelessWidget {
     required this.value,
     required this.items,
     required this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class CustomGenderDropdown extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       items: items,
+       validator: validator,
     );
   }
 }

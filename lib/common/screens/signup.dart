@@ -158,7 +158,6 @@ class _SignupState extends ConsumerState<Signup> {
                   onChanged: (value) {
                     _middleNameController.text = value;
                     print("Text changed: $value");
-                    
                   },
                 ),
                 const SizedBox(height: 10),
@@ -182,13 +181,19 @@ class _SignupState extends ConsumerState<Signup> {
                 ),
                 const SizedBox(height: 10),
                 CustomGenderDropdown(
-                  labelText: "Select Gender",
+                  labelText: "Gender",
                   prefixIcon: Icons.person,
                   value: _selectedGender,
                   items: const [
                     DropdownMenuItem(value: 'male', child: Text('Male')),
                     DropdownMenuItem(value: 'female', child: Text('Female')),
                   ],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select a gender';
+                    }
+                    return null;
+                  },
                   onChanged: (newValue) {
                     setState(() {
                       _selectedGender = newValue;
@@ -237,17 +242,16 @@ class _SignupState extends ConsumerState<Signup> {
                   prefixIcon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email';
-                              }
-                              return null;
-                            },
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                        .hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
                   onChanged: (value) {
                     _emailController.text = value;
-                   
                   },
                 ),
                 const SizedBox(height: 10),
@@ -285,6 +289,14 @@ class _SignupState extends ConsumerState<Signup> {
                       },
                     ),
                   ),
+                  validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              } else if (value.length < 8) {
+                                return 'Password must be at least 8 characters';
+                              }
+                              return null;
+                            },
                   onSaved: (value) => _newPassword = value,
                 ),
                 const SizedBox(height: 10.0),
