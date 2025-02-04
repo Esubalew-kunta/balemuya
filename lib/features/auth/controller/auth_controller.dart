@@ -22,15 +22,10 @@ class AuthController {
 
   AuthController(this._repository);
 
-  Future<void> registerUser(Map<String, dynamic> userData) async {
-    try {
-      await _repository.registerUser(userData);
-      // Handle success
-    } catch (e) {
-      // Handle error
-      rethrow;
-    }
-  }
+  Future<Map<String, dynamic>> registerUser(Map<String, dynamic> userData) async {
+  return await _repository.registerUser(userData);
+}
+
 
   Future<void> loginUser(String email, String password) async {
     try {

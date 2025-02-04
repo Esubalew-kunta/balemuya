@@ -27,7 +27,7 @@ class _SignupState extends ConsumerState<Signup> {
 
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
-      TextEditingController();    
+      TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -47,38 +47,38 @@ class _SignupState extends ConsumerState<Signup> {
     return null;
   }
 
-  void _submitData() async {
-    if ((_formKey1.currentState?.validate() ?? false) &&
-        (_formKey2.currentState?.validate() ?? false)) {
-      try {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) =>
-              const Center(child: LoadingIndicatorWidget()),
-        );
+ void _submitData() async {
+  if ((_formKey1.currentState?.validate() ?? false) &&
+      (_formKey2.currentState?.validate() ?? false)) {
+    try {
+      // Show loading dialog
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(child: LoadingIndicatorWidget()),
+      );
 
-        final userData = {
-          "first_name": _firstNameController.text.trim(),
-          "middle_name": _middleNameController.text.trim(),
-          "last_name": _lastNameController.text.trim(),
-          "gender": _selectedGender,
-          "phone_number": _phoneController.text.trim(),
-          "email": _emailController.text.trim(),
-          "password": _newPasswordController.text.trim(),
-          "user_type": widget.role,
-        };
-      
+      final userData = {
+        "first_name": _firstNameController.text.trim(),
+        "middle_name": _middleNameController.text.trim(),
+        "last_name": _lastNameController.text.trim(),
+        "gender": _selectedGender,
+        "phone_number": _phoneController.text.trim(),
+        "email": _emailController.text.trim(),
+        "password": _newPasswordController.text.trim(),
+        "user_type": widget.role,
+      };
 
-        debugPrint(userData.toString());
+      // Call the controller (Now it returns a response)
+      final response = await ref.read(authControllerProvider).registerUser(userData);
 
-        // Call the controller
-        await ref.read(authControllerProvider).registerUser(userData);
-        debugPrint(userData.toString());
-        if (mounted) Navigator.pop(context);
-        // Show successF
+      // Remove loading indicator
+      if (mounted) Navigator.pop(context);
+
+      if (response["success"] == true) {
+        // Show success message
         AnimatedSnackBar.material(
-          'Registration Successful!',
+          response["message"],
           type: AnimatedSnackBarType.success,
         ).show(context);
 
@@ -91,18 +91,26 @@ class _SignupState extends ConsumerState<Signup> {
             );
           });
         }
-      } catch (e) {
-        // Remove loading
-        if (mounted) Navigator.pop(context);
-
-        // Show error
+      } else {
+        // Show error message
         AnimatedSnackBar.material(
-          e.toString(),
+          response["message"],
           type: AnimatedSnackBarType.error,
         ).show(context);
       }
+    } catch (e) {
+      // Remove loading indicator
+      if (mounted) Navigator.pop(context);
+
+      // Show error snackbar
+      AnimatedSnackBar.material(
+        "An unexpected error occurred. Please try again.",
+        type: AnimatedSnackBarType.error,
+      ).show(context);
     }
   }
+}
+
 
   // List of steps
   List<Step> stepList() => [
@@ -128,8 +136,8 @@ class _SignupState extends ConsumerState<Signup> {
                   // },
                   onChanged: (value) {
                     _firstNameController.text = value;
-                print("Text changed: $value");  
-              },
+                    print("Text changed: $value");
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
@@ -137,10 +145,10 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'Middle Name',
                   prefixIcon: Icons.person,
                   keyboardType: TextInputType.name,
-                   onChanged: (value) {
+                  onChanged: (value) {
                     _middleNameController.text = value;
-                print("Text changed: $value");  
-              },
+                    print("Text changed: $value");
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
@@ -150,8 +158,8 @@ class _SignupState extends ConsumerState<Signup> {
                   keyboardType: TextInputType.name,
                   onChanged: (value) {
                     _lastNameController.text = value;
-                print("Text changed: $value");  
-              },
+                    print("Text changed: $value");
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomGenderDropdown(
@@ -188,10 +196,10 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'Phone Number',
                   prefixIcon: Icons.phone,
                   keyboardType: TextInputType.phone,
-                   onChanged: (value) {
+                  onChanged: (value) {
                     _phoneController.text = value;
-                print("Text changed: $value");  
-              },
+                    print("Text changed: $value");
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
@@ -199,10 +207,10 @@ class _SignupState extends ConsumerState<Signup> {
                   labelText: 'Email',
                   prefixIcon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
+                  onChanged: (value) {
                     _emailController.text = value;
-                print("Text changed: $value");  
-              },
+                    print("Text changed: $value");
+                  },
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
