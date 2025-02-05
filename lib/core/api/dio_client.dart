@@ -9,7 +9,7 @@ class DioClient {
 
   DioClient({required this.dio, required this.tokenStorage}) {
     dio.options = BaseOptions(
-      baseUrl: 'https://balemuya-project.vercel.app/',
+      baseUrl: 'https://balemuya-project.onrender.com',
       contentType: 'application/json',
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),

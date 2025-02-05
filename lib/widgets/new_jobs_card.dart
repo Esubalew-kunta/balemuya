@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SmallJobCard extends StatelessWidget {
+class NewJobsCard extends StatelessWidget {
   final String title;
   final String urgency;
   final String time;
@@ -8,13 +8,13 @@ class SmallJobCard extends StatelessWidget {
   final String description;
   final Widget actionButton;
 
-  SmallJobCard({
+  NewJobsCard({
     required this.title,
     required this.urgency,
     required this.time,
     required this.distance,
     required this.description,
-    required this.actionButton,
+    required this.actionButton, 
   });
 
   @override

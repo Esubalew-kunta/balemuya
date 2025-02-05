@@ -1,31 +1,45 @@
+import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/widgets/large_job_card.dart';
+import 'package:blaemuya/widgets/new_jobs_card.dart';
 import 'package:blaemuya/widgets/slider_button.dart';
 import 'package:blaemuya/widgets/small_button_bright.dart';
 import 'package:blaemuya/widgets/small_button_dark.dart';
-import 'package:blaemuya/widgets/small_job_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatelessWidget {
+class ProfessionalHome extends ConsumerStatefulWidget {
+  const ProfessionalHome({super.key});
+
+  @override
+  ConsumerState<ProfessionalHome> createState() => _ProfessionalHomeState();
+}
+class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
+   
+
   @override
   Widget build(BuildContext context) {
+     
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         elevation: 0,
-        leading: const Padding(
-          padding: EdgeInsets.only(
+        leading: Padding(
+          padding: const EdgeInsets.only(
               left:
                   8.0), // Adds padding to the left to move the image to the right
           child: CircleAvatar(
-            backgroundImage: AssetImage('assets/images/maintainance.jpg'),
+            backgroundImage:AssetImage(
+              'assets/images/mech.jpg',
+            ),
           ),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Hi Abebe',
+            
+            const Text('Hi Abebe  ',
                 style: TextStyle(color: Colors.white, fontSize: 13)),
             DropdownStatus(),
           ],
@@ -88,7 +102,7 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                SmallJobCard(
+                NewJobsCard(
                   title: 'Plumbing repair',
                   urgency: 'Urgent',
                   time: '2 hr ago',
@@ -116,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SmallJobCard(
+                NewJobsCard(
                   title: ' repair',
                   urgency: 'Urgent',
                   time: '2 hr ago',

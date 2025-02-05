@@ -1,8 +1,14 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:blaemuya/common/screens/onboardingScreenOne.dart';
 import 'package:blaemuya/common/screens/onboardingScreenThree.dart';
+import 'package:blaemuya/common/screens/onboardingScreenTwo.dart';
+import 'package:blaemuya/features/auth/controller/auth_controller.dart';
+import 'package:blaemuya/professional/screens/bottom_nav.dart';
+import 'package:blaemuya/professional/screens/pHome.dart';
+import 'package:blaemuya/professional/screens/user.dart';
+import 'package:blaemuya/widgets/appBar_text.dart';
 import 'package:blaemuya/widgets/large_button.dart';
-import 'package:blaemuya/widgets/password_field.dart';
-import 'package:blaemuya/widgets/snack_bar.dart';
+import 'package:blaemuya/widgets/loading_indicator.dart';
 import 'package:blaemuya/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,56 +22,76 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+  bool _newPasswordVisible = false;
   bool _isPasswordVisible = false;
   bool _isLoading = false;
+  String? _newPassword;
 
   void login() async {
     if (_formKey.currentState!.validate()) {
-      // Show loading animation
-      setState(() {
-        _isLoading = true;
-      });
+      // setState(() {
+      //   _isLoading = true;
+      // });
 
       final email = _emailController.text.trim();
-      final password = _passwordController.text.trim();
+      final password = _newPasswordController.text.trim();
 
       try {
-        // final response = await ref.read(authControllerProvider).login(email, password);
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => const Center(child:LoadingIndicatorWidget()),
+        );
 
-        // Hide loading animation
-        setState(() {
-          _isLoading = false;
-        });
+        final response =
+            await ref.read(authControllerProvider).loginUser(email, password);
 
-        // Show success snackbar
-        showCustomSnackBar(
-          context,
-          title: 'Success',
-          message: "response",
+        // Hide loading dialog
+           if(mounted) Navigator.pop(context);
+
+        // Show success snackbar with the response message
+        AnimatedSnackBar.material(
+          response["message"],
           type: AnimatedSnackBarType.success,
-        );
+        ).show(context);
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Placeholder(),
-          ),
-        );
+        // Extract user type from the response
+        final userType = response['user']['user_type'];
+
+        // Redirect user based on their type
+        if (userType == 'customer') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OnboardingScreenOne(),
+            ),
+          );
+        } else if (userType == 'professional') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>  UserProfilePage(),
+            ),
+          );
+        } 
       } catch (e) {
-        // Hide loading animation
-        setState(() {
-          _isLoading = false;
-        });
+        // Hide loading dialog
+        if (mounted) Navigator.pop(context);
 
-        // Show error snackbar
-        showCustomSnackBar(
-          context,
-          title: 'Error',
-          message: "Error to login",
+        // Show error snackbar with the server's error message
+        AnimatedSnackBar.material(
+          e.toString(), // Display the error message
           type: AnimatedSnackBarType.error,
-        );
+        ).show(context);
+      } finally {
+        // Ensure loading state is reset
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
     }
   }
@@ -75,24 +101,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Balemuya",
-          style: TextStyle(
-            color: Colors.black, // Set the color of the text
-            fontSize: 14, // Set the font size
-            fontWeight: FontWeight.w300, // Set the font weight (bold)
-            letterSpacing: 1.2, // Adjust the letter spacing
-          ),
-        ),
+        title: CustomText("Balemuya"),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: SafeArea(
         child: Stack(
@@ -137,9 +149,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           const SizedBox(height: 80),
                           CustomTextFormField(
                             controller: _emailController,
+                            labelText: 'Email',
+                            prefixIcon: Icons.email,
                             keyboardType: TextInputType.emailAddress,
-                            labelText: 'phone 09...',
-                            prefixIcon: Icons.phone,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
@@ -149,19 +161,57 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               }
                               return null;
                             },
+                            onChanged: (value) {
+                              _emailController.text = value;
+                            },
                           ),
                           const SizedBox(height: 20),
-                          CustomPasswordField(
-                            // controller: _passwordController,
-                            labelText: "Password",
+                          TextFormField(
+                            controller: _newPasswordController,
+                            obscureText: !_newPasswordVisible,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor:
+                                  const Color.fromRGBO(245, 245, 245, 1.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: " Password",
+                              prefixIcon: const Icon(Icons.lock),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 222, 228, 233),
+                                    width: 2),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 198, 206, 212),
+                                    width: 2),
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _newPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _newPasswordVisible = !_newPasswordVisible;
+                                  });
+                                },
+                              ),
+                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password';
-                              } else if (value.length < 6) {
-                                return 'Password must be at least 6 characters';
+                              } else if (value.length < 8) {
+                                return 'Password must be at least 8 characters';
                               }
                               return null;
                             },
+                            onSaved: (value) => _newPassword = value,
                           ),
                           const SizedBox(height: 10),
                           Align(
@@ -187,14 +237,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           const SizedBox(height: 30),
                           LargeButton(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Placeholder(),
-                                ),
-                              );
+                              login();
                             },
-                            text: "Next",
+                            text: "Login",
                           ),
                           const SizedBox(height: 30),
                           Row(

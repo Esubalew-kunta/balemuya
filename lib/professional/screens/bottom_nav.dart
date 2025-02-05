@@ -1,5 +1,7 @@
 
 import 'package:blaemuya/common/screens/signup.dart';
+import 'package:blaemuya/professional/Jobs.dart';
+
 import 'package:blaemuya/professional/screens/pHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,8 +18,8 @@ class _ProfessionalBottomBarState extends ConsumerState<ProfessionalBottomBar> {
   int _selectedIndex = 0; 
  
  final List<Widget>  _pages = [
-    HomeScreen(),
-    Placeholder(),
+    ProfessionalHome(),
+    JobScreen(),
     Placeholder(),
     Placeholder(),
     Placeholder(),

@@ -1,7 +1,9 @@
 import 'package:blaemuya/core/api/dio_client.dart';
 import 'package:blaemuya/core/api/endpoints.dart';
+import 'package:blaemuya/utils/tocken_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
 
 class AuthRepository {
   final DioClient dioClient;
@@ -55,26 +57,34 @@ String _extractErrorMessage(Response? response) {
         data: credentials,
       );
 
-      final accessToken = response.data['access'];
-      final refreshToken = response.data['refresh'];
-
-      await dioClient.tokenStorage.saveAccessToken(accessToken);
-      await dioClient.tokenStorage.saveRefreshToken(refreshToken);
-
+      // Save tokens to storage
+      final accessToken = response.data['user']['access'];
+      final refreshToken = response.data['user']['refresh'];
+      await TokenStorage.saveToken(accessToken);
+       final token = await TokenStorage.getToken();
+      debugPrint('Token: $token');
+     
+      // Return the full response
       return response.data;
     } on DioException catch (e) {
-      throw _handleDioError(e);  // Pass the error up to the UI layer
+      throw _handleDioError(e); // Pass the error up to the UI layer
     }
   }
 
   String _handleDioError(DioException e) {
-    final response = e.response;
-    if (response != null) {
-      debugPrint('Error response: ${response.data}');
-      return response.data['message'] ?? 'An error occurred';
+  final response = e.response;
+  if (response != null) {
+    debugPrint('Error response: ${response.data}');
+    // Extract error message from the backend response
+    if (response.data is Map<String, dynamic>) {
+      final errorData = response.data as Map<String, dynamic>;
+      // Check for the "error" key in the response
+      if (errorData.containsKey('error')) {
+        return errorData['error']; // Return the error message
+      }
     }
-    return 'Network error: ${e.message}';
   }
+  return 'An error occurred. Please try again.'; // Fallback message
+}
 
-  // Other methods follow a similar pattern...
 }

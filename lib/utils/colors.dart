@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 const primaryColor = Color(0xFF09133A);
+const primaryColorLight = Color.fromRGBO(170, 187, 204, 1);
 const secondaryColor = Color(0xFFF8F4F4);
 const accentColor = Color(0xFFE5E5E5);
 const errorColor = Color(0xFFD32F2F);
