@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:blaemuya/common/screens/setting.dart';
 import 'package:blaemuya/professional/screens/varified_profile_edit.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_picker/image_picker.dart';
 
-class VarifiedProfessionalProfile extends StatelessWidget {
+class ProfessionalProfile extends StatelessWidget {
   final String profileImageUrl =
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SRRmhH4X5N2e4QalcoxVbzYsD44C-sQv-w&s"; // Replace with actual image URL
   final String name = "Abebe Kebede";
@@ -17,7 +18,7 @@ class VarifiedProfessionalProfile extends StatelessWidget {
   final String Skills = "Plumbing";
   final String Bio = "I am skilled plumber with 5 years of experiance ";
 
-  VarifiedProfessionalProfile({super.key});
+  ProfessionalProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class VarifiedProfessionalProfile extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Placeholder()),
+                MaterialPageRoute(builder: (context) => SettingsPage()),
               );
             },
           ),
@@ -140,7 +141,7 @@ class VarifiedProfessionalProfile extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => VarifiedProfileEdit(),
+                              builder: (context) => ProfileEdit(),
                             ),
                           );
                         },

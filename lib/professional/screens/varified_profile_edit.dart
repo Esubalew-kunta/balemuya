@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/gender_dropdown.dart';
 import 'package:blaemuya/widgets/large_button.dart';
@@ -9,12 +8,12 @@ import 'package:blaemuya/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class VarifiedProfileEdit extends StatefulWidget {
+class ProfileEdit extends StatefulWidget {
   @override
-  _VarifiedProfileEditState createState() => _VarifiedProfileEditState();
+  _ProfileEditState createState() => _ProfileEditState();
 }
 
-class _VarifiedProfileEditState extends State<VarifiedProfileEdit> {
+class _ProfileEditState extends State<ProfileEdit> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
