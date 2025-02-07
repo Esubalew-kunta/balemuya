@@ -18,7 +18,7 @@ class _JobScreenState extends State<JobScreen> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 6, vsync: this);
   }
 
   @override

@@ -45,6 +45,10 @@ dependencies:
   shared_preferences: ^2.5.1
   flutter_rating_bar: ^4.0.1
   url_launcher: ^6.3.1
+  permission_handler: ^11.3.1
+  google_maps_flutter: ^2.10.0
+  cached_network_image: ^3.4.1
+  image_picker: ^1.1.2
 
 
 dev_dependencies:

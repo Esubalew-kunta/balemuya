@@ -1,4 +1,5 @@
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
+import 'package:blaemuya/professional/screens/jobs/new_jobs.dart';
 import 'package:blaemuya/widgets/large_job_card.dart';
 import 'package:blaemuya/widgets/new_jobs_card.dart';
 import 'package:blaemuya/widgets/slider_button.dart';
@@ -88,7 +89,12 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
               const Text('New jobs',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  NewJobs()),
+                  );
+                },
                 label: Text('See all'),
                 style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(
@@ -308,7 +314,14 @@ class HeroSection extends StatelessWidget {
                       bottom: 8,
                       left: 8,
                       child: SliderButton(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  NewJobs(),
+                            ),
+                          );
+                        },
                         text: 'Find Gigs',
                         isSelected: false,
                       ),

@@ -3,6 +3,7 @@ import 'package:blaemuya/common/screens/signup.dart';
 import 'package:blaemuya/professional/Jobs.dart';
 
 import 'package:blaemuya/professional/screens/pHome.dart';
+import 'package:blaemuya/professional/screens/verified_professional_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +21,7 @@ class _ProfessionalBottomBarState extends ConsumerState<ProfessionalBottomBar> {
  final List<Widget>  _pages = [
     ProfessionalHome(),
     JobScreen(),
-    Placeholder(),
+    VarifiedProfessionalProfile(),
     Placeholder(),
     Placeholder(),
     

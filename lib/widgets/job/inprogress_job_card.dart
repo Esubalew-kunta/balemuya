@@ -8,8 +8,9 @@ class InprogressJobCard extends StatelessWidget {
   final String time;
   final String distance;
   final String description;
-   final Widget callButton; // Phone number for calling
-   final Widget DirectionButton; // Function to navigate
+   final Widget callButton;
+   final Widget DirectionButton;
+    final Widget detailButton;
 
   InprogressJobCard({
     required this.title,
@@ -19,6 +20,7 @@ class InprogressJobCard extends StatelessWidget {
     required this.description,
     required this.callButton,
     required this.DirectionButton,
+    required this.detailButton,
   });
 
   @override
@@ -56,15 +58,20 @@ class InprogressJobCard extends StatelessWidget {
               Text(description, style: TextStyle(fontSize: 14)),
               SizedBox(height: 8),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                        Row(
+                          children: [
+                      Align(alignment: Alignment.centerRight, child: detailButton),
+                          ],
+                        ),
                   Row(
-                    children: [
-                      // Navigation Icon (Redirects to another page)
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [                 
                       SizedBox(height: 8),
             Align(alignment: Alignment.centerRight, child: DirectionButton),
-                      // Call Icon (Launches phone dialer)
-                     SizedBox(height: 8),
+                     SizedBox(width: 15),
             Align(alignment: Alignment.centerRight, child: callButton),
                     ],
                   ),

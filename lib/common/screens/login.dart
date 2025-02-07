@@ -9,6 +9,7 @@ import 'package:blaemuya/professional/screens/user.dart';
 import 'package:blaemuya/widgets/appBar_text.dart';
 import 'package:blaemuya/widgets/large_button.dart';
 import 'package:blaemuya/widgets/loading_indicator.dart';
+import 'package:blaemuya/widgets/snack_bar.dart';
 import 'package:blaemuya/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,13 +70,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           );
         } else if (userType == 'professional') {
+          
+          showCustomSnackBar(
+          context,
+          title: 'Success',
+          message: "You've successfully logged in!",
+          type: AnimatedSnackBarType.success,
+        );
+         
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) =>  UserProfilePage(),
+              builder: (context) =>  ProfessionalBottomBar(),
             ),
           );
         } 
+        else if (userType == 'admin') {
+          showCustomSnackBar(
+          context,
+          title: 'info',
+          message: "Admin cannot login via mobile app",
+          type: AnimatedSnackBarType.info,
+        );
+          return;
+       
+        }
       } catch (e) {
         // Hide loading dialog
         if (mounted) Navigator.pop(context);
