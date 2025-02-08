@@ -1,5 +1,6 @@
 
 import 'package:blaemuya/customer/screens/customer_home.dart';
+import 'package:blaemuya/customer/screens/customer_jobs_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,8 +15,8 @@ class _CustomerBottomNavState extends ConsumerState<CustomerBottomNav> {
   int _selectedIndex = 0; 
  
  final List<Widget>  _pages = [
-    Placeholder(),
-    Placeholder(),
+    CustomerHomePage(),
+    CustomerJobsList(),
     Placeholder(),
     Placeholder(),
     Placeholder(),

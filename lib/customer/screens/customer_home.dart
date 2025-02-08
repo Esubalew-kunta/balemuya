@@ -1,9 +1,8 @@
+import 'package:blaemuya/customer/screens/job_related/post_job.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/slider_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
-
 
 class CustomerHomePage extends StatefulWidget {
   @override
@@ -12,7 +11,7 @@ class CustomerHomePage extends StatefulWidget {
 
 class _CustomerHomePageState extends State<CustomerHomePage> {
   String searchQuery = "";
-   final Map<String, List<Map<String, dynamic>>> categories = {
+  final Map<String, List<Map<String, dynamic>>> categories = {
     "Maintenance": [
       {"title": "Electrician", "icon": Icons.electrical_services},
       {"title": "Plumber", "icon": Icons.plumbing},
@@ -40,14 +39,14 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor:primaryColor,
+        backgroundColor: primaryColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(
               left:
                   8.0), // Adds padding to the left to move the image to the right
           child: CircleAvatar(
-            backgroundImage:AssetImage(
+            backgroundImage: AssetImage(
               'assets/images/mech.jpg',
             ),
           ),
@@ -55,10 +54,8 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             const Text('Hi Abebe  ',
                 style: TextStyle(color: Colors.white, fontSize: 13)),
-           
           ],
         ),
         actions: const [
@@ -72,28 +69,28 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //location
-              Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.location_on, color: Colors.blue[900]),
-                  const SizedBox(width: 8),
-                  const Text('Bahir Dar, poly'),
-                ],
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.refresh, size: 16),
-                label: Text('Update location'),
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(
-                      fontSize: 14, color: Color.fromARGB(255, 0, 0, 0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.location_on, color: primaryColor),
+                    const SizedBox(width: 8),
+                    const Text('Bahir Dar, poly'),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 16),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.refresh, size: 16),
+                  label: Text('Update location'),
+                  style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(
+                        fontSize: 14, color: Color.fromARGB(255, 0, 0, 0)),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
             // Search Bar
             TextField(
               onChanged: (value) {
@@ -114,14 +111,14 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
             ),
 
             SizedBox(height: 16),
-                   //slider Section
-          HeroSection(),
-         SizedBox(height: 16),
-         
+            //slider Section
+            HeroSection(),
+            SizedBox(height: 16),
+
             // Display only categories that have matching search results
             for (var category in categories.keys)
-              if (categories[category]!
-                  .any((service) => service["title"]!.toLowerCase().contains(searchQuery)))
+              if (categories[category]!.any((service) =>
+                  service["title"]!.toLowerCase().contains(searchQuery)))
                 _buildCategorySection(category),
           ],
         ),
@@ -129,18 +126,27 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
 
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.indigo[900],
+        onPressed: () {
+          onPressed:
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => JobPostPage()),
+            );
+          };
+        },
+        backgroundColor: primaryColor,
         child: Icon(Icons.add, color: Colors.white),
       ),
     );
   }
 
- // Category Section Widget
+  // Category Section Widget
   Widget _buildCategorySection(String title) {
     List<Map<String, dynamic>> services = categories[title]!;
     List<Map<String, dynamic>> filteredServices = services
-        .where((service) => service["title"]!.toLowerCase().contains(searchQuery))
+        .where(
+            (service) => service["title"]!.toLowerCase().contains(searchQuery))
         .toList();
 
     return Column(
@@ -150,12 +156,15 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             TextButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SeeAllPage(title: title, services: services)),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SeeAllPage(title: title, services: services)),
                 );
               },
               child: Text("See All"),
@@ -178,7 +187,9 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => JobDetailPage(title: service["title"]!)),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          JobDetailPage(title: service["title"]!)),
                 );
               },
               child: Card(
@@ -193,7 +204,10 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                   children: [
                     Icon(service["icon"], size: 40, color: Colors.indigo),
                     SizedBox(height: 8),
-                    Text(service["title"]!, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text(service["title"]!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -204,9 +218,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
       ],
     );
   }
-
 }
-
 
 class HeroSection extends StatelessWidget {
   final List<String> images = [
@@ -263,7 +275,7 @@ class HeroSection extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  Placeholder(),
+                              builder: (context) => Placeholder(),
                             ),
                           );
                         },
@@ -281,8 +293,6 @@ class HeroSection extends StatelessWidget {
     );
   }
 }
-
-
 
 // Job Detail Page
 class JobDetailPage extends StatelessWidget {
@@ -320,13 +330,16 @@ class SeeAllPage extends StatelessWidget {
         itemBuilder: (context, index) {
           var service = services[index];
           return ListTile(
-            leading: Icon(service["icon"], color: Colors.indigo),
-            title: Text(service["title"]!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            leading: Icon(service["icon"], color: primaryColor),
+            title: Text(service["title"]!,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => JobDetailPage(title: service["title"]!)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        JobDetailPage(title: service["title"]!)),
               );
             },
           );
