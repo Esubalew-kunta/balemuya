@@ -1,5 +1,6 @@
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/professional/screens/jobs/new_jobs.dart';
+import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/large_job_card.dart';
 import 'package:blaemuya/widgets/new_jobs_card.dart';
 import 'package:blaemuya/widgets/slider_button.dart';
@@ -24,7 +25,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.blue[900],
+        backgroundColor:primaryColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(

@@ -2,6 +2,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:blaemuya/common/screens/onboardingScreenOne.dart';
 import 'package:blaemuya/common/screens/onboardingScreenThree.dart';
 import 'package:blaemuya/common/screens/onboardingScreenTwo.dart';
+import 'package:blaemuya/customer/screens/customer_bottom_nav.dart';
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/professional/screens/bottom_nav.dart';
 import 'package:blaemuya/professional/screens/pHome.dart';
@@ -66,7 +67,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => OnboardingScreenOne(),
+              builder: (context) => CustomerBottomNav(),
             ),
           );
         } else if (userType == 'professional') {
