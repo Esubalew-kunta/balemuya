@@ -127,13 +127,14 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          onPressed:
-          () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => JobPostPage()),
-            );
-          };
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              JobPostPage(), 
+                        ),
+                      );      
         },
         backgroundColor: primaryColor,
         child: Icon(Icons.add, color: Colors.white),
@@ -257,7 +258,7 @@ class HeroSection extends StatelessWidget {
                       top: 8,
                       left: 8,
                       child: Text(
-                        'Become a service\n' ' seller',
+                        'Find the best Nearby Professiolnals',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
