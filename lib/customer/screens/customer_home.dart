@@ -1,4 +1,6 @@
-import 'package:blaemuya/customer/screens/job_related/post_job.dart';
+import 'package:blaemuya/customer/screens/customer_jobs_list.dart';
+import 'package:blaemuya/customer/screens/jobs/post_job.dart';
+import 'package:blaemuya/customer/screens/jobs/nearby_professionals_map.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/slider_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -41,20 +43,20 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(
+        leading: const Padding(
+          padding: EdgeInsets.only(
               left:
                   8.0), // Adds padding to the left to move the image to the right
           child: CircleAvatar(
             backgroundImage: AssetImage(
-              'assets/images/mech.jpg',
+              'assets/images/avator.png',
             ),
           ),
         ),
-        title: Column(
+        title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Hi Abebe  ',
+            Text('Hi Abebe  ',
                 style: TextStyle(color: Colors.white, fontSize: 13)),
           ],
         ),
@@ -127,14 +129,12 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              JobPostPage(), 
-                        ),
-                      );      
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => JobPostPage(),
+            ),
+          );
         },
         backgroundColor: primaryColor,
         child: Icon(Icons.add, color: Colors.white),
@@ -163,9 +163,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          SeeAllPage(title: title, services: services)),
+                  MaterialPageRoute(builder: (context) => CustomerJobsList()),
                 );
               },
               child: Text("See All"),
@@ -190,7 +188,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          JobDetailPage(title: service["title"]!)),
+                          NearbyProfessionalsMap(title: service["title"]!)),
                 );
               },
               child: Card(
@@ -258,12 +256,12 @@ class HeroSection extends StatelessWidget {
                       top: 8,
                       left: 8,
                       child: Text(
-                        'Find the best Nearby Professiolnals',
+                        'Find the best Nearby \nProfessiolnals',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
-                          fontSize: 28,
+                          fontSize: 25,
                           wordSpacing: 2,
                         ),
                       ),
@@ -276,7 +274,7 @@ class HeroSection extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Placeholder(),
+                              builder: (context) => CustomerJobsList(),
                             ),
                           );
                         },
@@ -314,38 +312,38 @@ class JobDetailPage extends StatelessWidget {
   }
 }
 
-// See All Page
-class SeeAllPage extends StatelessWidget {
-  final String title;
-  final List<Map<String, dynamic>> services;
+// // See All Page
+// class SeeAllPage extends StatelessWidget {
+//   final String title;
+//   final List<Map<String, dynamic>> services;
 
-  SeeAllPage({required this.title, required this.services});
+//   SeeAllPage({required this.title, required this.services});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16),
-        itemCount: services.length,
-        itemBuilder: (context, index) {
-          var service = services[index];
-          return ListTile(
-            leading: Icon(service["icon"], color: primaryColor),
-            title: Text(service["title"]!,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        JobDetailPage(title: service["title"]!)),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text(title)),
+//       body: ListView.builder(
+//         padding: EdgeInsets.all(16),
+//         itemCount: services.length,
+//         itemBuilder: (context, index) {
+//           var service = services[index];
+//           return ListTile(
+//             leading: Icon(service["icon"], color: primaryColor),
+//             title: Text(service["title"]!,
+//                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+//             trailing: Icon(Icons.arrow_forward_ios),
+//             onTap: () {
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                     builder: (context) =>
+//                         JobDetailPage(title: service["title"]!)),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

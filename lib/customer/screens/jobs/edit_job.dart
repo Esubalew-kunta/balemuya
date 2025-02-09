@@ -9,12 +9,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'pick_location.dart'; // Ensure this import is correct
 
-class JobPostPage extends StatefulWidget {
+class EditPostedJob extends StatefulWidget {
+   final Map<String, dynamic> job; // Accept job data as a Map
+
+  EditPostedJob({required this.job});
   @override
-  _JobPostPageState createState() => _JobPostPageState();
+  _EditPostedJobState createState() => _EditPostedJobState();
 }
 
-class _JobPostPageState extends State<JobPostPage> {
+class _EditPostedJobState extends State<EditPostedJob> {
   String? selectedService;
   bool isUrgent = false;
   DateTime? selectedDate;
@@ -127,7 +130,8 @@ class _JobPostPageState extends State<JobPostPage> {
     LatLng? selectedLatLng = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PickLocationScreen(initialLocation: userCurrentLocation),
+        builder: (context) =>
+            PickLocationScreen(initialLocation: userCurrentLocation),
       ),
     );
 
@@ -148,30 +152,31 @@ class _JobPostPageState extends State<JobPostPage> {
         pickedLocation == null ||
         description.isEmpty) {
       showCustomSnackBar(
-          context,
-          title: 'Info',
-          message: "Please fill all fields!",
-          type: AnimatedSnackBarType.info,
-        );
+        context,
+        title: 'Info',
+        message: "Please fill all fields!",
+        type: AnimatedSnackBarType.info,
+      );
       return;
     }
 
     print("Service: $selectedService");
     print("Urgent: $isUrgent");
-    print("Date & Time: ${DateFormat('yyyy-MM-dd HH:mm').format(selectedDate!)}");
+    print(
+        "Date & Time: ${DateFormat('yyyy-MM-dd HH:mm').format(selectedDate!)}");
     print("Description: $description");
-    print("Location: ${pickedLocation!.latitude}, ${pickedLocation!.longitude}");
+    print(
+        "Location: ${pickedLocation!.latitude}, ${pickedLocation!.longitude}");
 
     showCustomSnackBar(
-          context,
-          title: 'Success',
-          message: "Job posted successfully",
-          type: AnimatedSnackBarType.success,
-        );
-        Future.delayed(Duration(seconds: 1), () {
-    Navigator.pop(context);
-  });
-        
+      context,
+      title: 'Success',
+      message: "Job posted successfully",
+      type: AnimatedSnackBarType.success,
+    );
+    Future.delayed(Duration(seconds: 1), () {
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -206,8 +211,10 @@ class _JobPostPageState extends State<JobPostPage> {
                   SizedBox(height: 16),
                   _buildLocationSelection(),
                   SizedBox(height: 16),
-                  
-                  LargeButton(onTap: _submitForm,text: "Post",)
+                  LargeButton(
+                    onTap: _submitForm,
+                    text: "Post",
+                  )
                 ],
               ),
             ),
@@ -237,7 +244,8 @@ class _JobPostPageState extends State<JobPostPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("Urgent", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Urgent",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         Switch(
           value: isUrgent,
           onChanged: (value) => setState(() => isUrgent = value),
@@ -312,11 +320,15 @@ class _JobPostPageState extends State<JobPostPage> {
         if (locationChoice == "yes" && isLoading)
           Center(child: CircularProgressIndicator()),
         if (locationChoice == "yes" && currentLocation != null)
-          Center(child: Text("Location registered.", style: TextStyle(color: Colors.green))),
+          Center(
+              child: Text("Location registered.",
+                  style: TextStyle(color: Colors.green))),
         if (locationChoice == "no" && isPickingLocation)
           Center(child: CircularProgressIndicator()),
         if (locationChoice == "no" && pickedLocation != null)
-          Center(child: Text("Location picked.", style: TextStyle(color: Colors.green))),
+          Center(
+              child: Text("Location picked.",
+                  style: TextStyle(color: Colors.green))),
       ],
     );
   }
@@ -326,11 +338,13 @@ class _JobPostPageState extends State<JobPostPage> {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: _submitForm,
-        child: Text("Submit", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        child: Text("Submit",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 14),
           backgroundColor: Colors.indigo[900],
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );

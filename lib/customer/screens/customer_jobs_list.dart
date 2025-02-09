@@ -1,3 +1,4 @@
+import 'package:blaemuya/customer/screens/jobs/nearby_professionals_map.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/appBar_text.dart';
 import 'package:blaemuya/widgets/slider_button.dart';
@@ -120,7 +121,7 @@ class _CustomerHomePageState extends State<CustomerJobsList> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => JobDetailPage(title: service["title"]!)),
+                  MaterialPageRoute(builder: (context) => NearbyProfessionalsMap(title: service["title"]!)),
                 );
               },
               child: Card(

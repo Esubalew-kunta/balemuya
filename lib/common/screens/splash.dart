@@ -1,4 +1,3 @@
-
 import 'package:blaemuya/common/screens/onboardingScreenOne.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,10 +19,9 @@ class _SplashScreenState extends State<SplashScreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     // Navigate to Home after 5 seconds
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => OnboardingScreenOne()
-    ),
+        MaterialPageRoute(builder: (_) => OnboardingScreenOne()),
       );
     });
   }
@@ -46,10 +44,9 @@ class _SplashScreenState extends State<SplashScreen>
           // Background Gradient
           Container(
             width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255)
-              ),
-            ),
+            decoration:
+                const BoxDecoration(color: Color.fromARGB(255, 255, 255, 255)),
+          ),
 
           // Main Content (Image and Motto)
           Center(
@@ -58,21 +55,23 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 // Logo
                 Image.asset(
-                  'assets/images/balemuya_logo.png',
-                  width: MediaQuery.of(context).size.width * 0.6, // Scaled width
+                  'assets/icon/icon.png',
+                  width:
+                      MediaQuery.of(context).size.width * 0.6, // Scaled width
                 ),
                 const SizedBox(height: 20), // Add spacing between logo and text
 
                 // Motto
-                // Text(
-                //   "No More Crawling on the Floor",
-                //   style: TextStyle(
-                //     color: const Color.fromARGB(255, 63, 61, 61),
-                //     fontStyle: FontStyle.italic,
-                //     fontSize: MediaQuery.of(context).size.width * 0.045, // Responsive font size
-                //   ),
-                //   textAlign: TextAlign.center,
-                // ),
+                Text(
+                  "Services at Your Fingertips",
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 63, 61, 61),
+                    fontStyle: FontStyle.italic,
+                    fontSize: MediaQuery.of(context).size.width *
+                        0.045, // Responsive font size
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),

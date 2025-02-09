@@ -33,9 +33,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void login() async {
     if (_formKey.currentState!.validate()) {
-      // setState(() {
-      //   _isLoading = true;
-      // });
+   
 
       final email = _emailController.text.trim();
       final password = _newPasswordController.text.trim();
@@ -281,7 +279,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            OnboardingScreenThree(),
+                                            OnboardingScreenOne(),
                                       ),
                                     );
                                   },

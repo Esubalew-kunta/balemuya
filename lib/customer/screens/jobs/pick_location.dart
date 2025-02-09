@@ -25,8 +25,10 @@ class _PickLocationScreenState extends State<PickLocationScreen> {
     return Scaffold(
       appBar: AppBar(title: Text("Pick a Location")),
       body: GoogleMap(
+        
         initialCameraPosition: CameraPosition(
           target: widget.initialLocation,
+          
           zoom: 15.0,
         ),
         onMapCreated: (controller) {

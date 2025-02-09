@@ -1,6 +1,8 @@
 
 import 'package:blaemuya/customer/screens/customer_home.dart';
 import 'package:blaemuya/customer/screens/customer_jobs_list.dart';
+import 'package:blaemuya/customer/screens/customer_jobs_section.dart';
+import 'package:blaemuya/customer/screens/customer_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,9 +19,9 @@ class _CustomerBottomNavState extends ConsumerState<CustomerBottomNav> {
  final List<Widget>  _pages = [
     CustomerHomePage(),
     CustomerJobsList(),
+    CustomerJobsSection(),
     Placeholder(),
-    Placeholder(),
-    Placeholder(),
+    CustomerProfile(),
     
 
     ];
@@ -55,8 +57,8 @@ class _CustomerBottomNavState extends ConsumerState<CustomerBottomNav> {
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
-          icon: Icon(Icons.payment),
-          label: 'Payment',
+          icon: Icon(Icons.person),
+          label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

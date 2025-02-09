@@ -12,7 +12,8 @@ class JobScreen extends StatefulWidget {
   _JobScreenState createState() => _JobScreenState();
 }
 
-class _JobScreenState extends State<JobScreen> with SingleTickerProviderStateMixin {
+class _JobScreenState extends State<JobScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -47,15 +48,22 @@ class _JobScreenState extends State<JobScreen> with SingleTickerProviderStateMix
                 isScrollable: true,
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.grey,
-                indicator: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(10),
+                labelStyle: TextStyle(
+                    fontWeight: FontWeight.bold), 
+                unselectedLabelStyle: TextStyle(
+                    fontWeight: FontWeight.normal),
+                indicator: UnderlineTabIndicator(
+                  borderSide: BorderSide(
+                      width: 3.0,
+                      color: Colors.white), 
+                  insets: EdgeInsets.symmetric(
+                      horizontal: 16), 
                 ),
                 tabs: const [
                   Tab(text: "New"),
                   Tab(text: "Applied"),
                   Tab(text: "Requested"),
-                  Tab(text: "In progress"),
+                  Tab(text: "In Progress"),
                   Tab(text: "Completed"),
                   Tab(text: "Cancelled"),
                 ],
@@ -66,11 +74,10 @@ class _JobScreenState extends State<JobScreen> with SingleTickerProviderStateMix
             child: TabBarView(
               controller: _tabController,
               children: [
-            NewJobs(),
-            AppliedJobs(),
-            RequestedJob(),
-            InprogressJobs(),
-            
+                NewJobs(),
+                AppliedJobs(),
+                RequestedJob(),
+                InprogressJobs(),
               ],
             ),
           ),

@@ -12,6 +12,7 @@ import 'package:blaemuya/widgets/snack_bar.dart';
 import 'package:blaemuya/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreenThree extends StatefulWidget {
   @override
@@ -129,7 +130,9 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
 
               // Next button
               LargeButton(
-                onTap: () {
+                onTap: () async  {
+                  final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('hasSeenOnboarding', true);
                   navigateToSignUp(context);
                 },
                 text: 'Next',
