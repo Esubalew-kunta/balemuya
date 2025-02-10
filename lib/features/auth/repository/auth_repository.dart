@@ -1,6 +1,6 @@
 import 'package:blaemuya/core/api/dio_client.dart';
 import 'package:blaemuya/core/api/endpoints.dart';
-import 'package:blaemuya/utils/tocken_storage.dart';
+import 'package:blaemuya/core/storage/token_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -58,11 +58,20 @@ String _extractErrorMessage(Response? response) {
       );
 
       // Save tokens to storage
-      final accessToken = response.data['user']['access'];
-      final refreshToken = response.data['user']['refresh'];
-      await TokenStorage.saveToken(accessToken);
-       final token = await TokenStorage.getToken();
-      debugPrint('Token: $token');
+      final tokenStorage = TokenStorage(); // Create an instance
+
+final accessToken = response.data['user']['access'];
+final refreshToken = response.data['user']['refresh'];
+
+await tokenStorage.saveAccessToken(accessToken); // Call methods using the instance
+final token = await tokenStorage.getAccessToken();
+ debugPrint('Tokens: $token');
+
+      // final accessToken = response.data['user']['access'];
+      // final refreshToken = response.data['user']['refresh'];
+      // await TokenStorage.saveAccessToken(accessToken);
+      //  final token = await TokenStorage.getAccessToken();
+      debugPrint('Tokens: $token');
      
       // Return the full response
       return response.data;

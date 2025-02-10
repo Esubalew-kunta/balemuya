@@ -17,7 +17,7 @@ class _CustomerBottomNavState extends ConsumerState<CustomerBottomNav> {
   int _selectedIndex = 0; 
  
  final List<Widget>  _pages = [
-    CustomerHomePage(),
+    CustomerHome(),
     CustomerJobsList(),
     CustomerJobsSection(),
     Placeholder(),

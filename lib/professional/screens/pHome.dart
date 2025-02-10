@@ -1,4 +1,5 @@
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
+import 'package:blaemuya/features/auth/controller/user_controller.dart';
 import 'package:blaemuya/professional/screens/jobs/new_jobs.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/large_job_card.dart';
@@ -16,35 +17,80 @@ class ProfessionalHome extends ConsumerStatefulWidget {
   @override
   ConsumerState<ProfessionalHome> createState() => _ProfessionalHomeState();
 }
-class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
-   
 
+class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
   @override
   Widget build(BuildContext context) {
-     
+    // final userData = ref.watch(userControllerProvider).getUserProfile();
+    // print("Datttt ${userData}");
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor:primaryColor,
+        backgroundColor: primaryColor,
         elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(
-              left:
-                  8.0), // Adds padding to the left to move the image to the right
-          child: CircleAvatar(
-            backgroundImage:AssetImage(
-              'assets/images/mech.jpg',
-            ),
-          ),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            
-            const Text('Hi Abebe  ',
-                style: TextStyle(color: Colors.white, fontSize: 13)),
-            DropdownStatus(),
-          ],
+        leading: FutureBuilder(
+          future: ref.watch(userControllerProvider).getUserProfile(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 255, 105, 105),
+                  child: Icon(Icons.home, color: Colors.white),
+                ),
+              );
+            } 
+
+            // Ensure safe access to user data
+            final userData = snapshot.data?['user']?['user'];
+            print("context $context");
+            if (userData == null) {
+              return const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  child:
+                      Icon(Icons.error, color: Color.fromARGB(255, 2, 255, 36)),
+                ),
+              );
+            }
+
+            final profileImageUrl = userData['profile_image_url'];
+            final firstName = userData['first_name'] ?? 'User';
+
+            return Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: CircleAvatar(
+                    backgroundImage: profileImageUrl != null
+                        ? NetworkImage(profileImageUrl)
+                        : const AssetImage('assets/images/avator.png')
+                            as ImageProvider,
+                  ),
+                ),
+                const SizedBox(width: 8), // Add spacing
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                   
+                    Text('Hi $firstName',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 13, overflow: TextOverflow.ellipsis,)),
+                    // DropdownStatus(), // Your existing dropdown widget
+                  ],
+                ),
+              ],
+            );
+          },
         ),
         actions: const [
           Icon(Icons.notifications, color: Colors.white),
@@ -93,7 +139,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>  NewJobs()),
+                    MaterialPageRoute(builder: (context) => NewJobs()),
                   );
                 },
                 label: Text('See all'),
@@ -191,7 +237,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(children: [
-                LargeJobCard(                                                               
+                LargeJobCard(
                   title: 'Electrical repair',
                   urgency: 'Urgent',
                   time: '2 hr ago',
@@ -319,7 +365,7 @@ class HeroSection extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  NewJobs(),
+                              builder: (context) => NewJobs(),
                             ),
                           );
                         },

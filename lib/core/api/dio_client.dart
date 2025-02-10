@@ -1,3 +1,5 @@
+
+
 import 'package:blaemuya/core/api/endpoints.dart';
 import 'package:blaemuya/core/storage/token_storage.dart';
 import 'package:dio/dio.dart';
@@ -11,18 +13,18 @@ class DioClient {
     dio.options = BaseOptions(
       baseUrl: 'https://balemuya-project.onrender.com',
       contentType: 'application/json',
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
+      connectTimeout: const Duration(seconds: 300),
+      receiveTimeout: const Duration(seconds: 300),
     );
 
     // logging requests and responses
     dio.interceptors.add(LogInterceptor(
-      request: true, 
-      requestHeader: true, 
-      requestBody: true, 
+      request: true,
+      requestHeader: true,
+      requestBody: true,
       responseHeader: true,
-      responseBody: true, 
-      error: true, 
+      responseBody: true,
+      error: true,
       logPrint: (log) {
         debugPrint(log.toString());
       },
@@ -41,6 +43,8 @@ class DioClient {
     RequestInterceptorHandler handler,
   ) async {
     final accessToken = await tokenStorage.getAccessToken();
+
+    print("Tockena $accessToken");
     if (accessToken != null) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
@@ -68,12 +72,12 @@ class DioClient {
   Future<String> _refreshToken() async {
     final refreshToken = await tokenStorage.getRefreshToken();
     if (refreshToken == null) throw Exception('No refresh token available');
-    
+
     final response = await dio.post(
       Endpoints.refreshToken,
       data: {'refresh': refreshToken},
     );
-    
+
     final newAccessToken = response.data['access'];
     await tokenStorage.saveAccessToken(newAccessToken);
     return newAccessToken;

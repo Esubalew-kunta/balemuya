@@ -1,17 +1,21 @@
 import 'package:blaemuya/customer/screens/customer_jobs_list.dart';
 import 'package:blaemuya/customer/screens/jobs/post_job.dart';
 import 'package:blaemuya/customer/screens/jobs/nearby_professionals_map.dart';
+import 'package:blaemuya/features/auth/controller/user_controller.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/slider_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CustomerHomePage extends StatefulWidget {
+class CustomerHome extends ConsumerStatefulWidget {
+  const CustomerHome({super.key});
+
   @override
-  _CustomerHomePageState createState() => _CustomerHomePageState();
+  ConsumerState<CustomerHome> createState() => _CustomerHomeState();
 }
 
-class _CustomerHomePageState extends State<CustomerHomePage> {
+class _CustomerHomeState extends ConsumerState<CustomerHome> {
   String searchQuery = "";
   final Map<String, List<Map<String, dynamic>>> categories = {
     "Maintenance": [
@@ -43,22 +47,69 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 0,
-        leading: const Padding(
-          padding: EdgeInsets.only(
-              left:
-                  8.0), // Adds padding to the left to move the image to the right
-          child: CircleAvatar(
-            backgroundImage: AssetImage(
-              'assets/images/avator.png',
-            ),
-          ),
-        ),
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Hi Abebe  ',
-                style: TextStyle(color: Colors.white, fontSize: 13)),
-          ],
+        leading: FutureBuilder(
+          future: ref.watch(userControllerProvider).getUserProfile(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 255, 105, 105),
+                  child: Icon(Icons.home, color: Colors.white),
+                ),
+              );
+            } 
+
+            // Ensure safe access to user data
+            final userData = snapshot.data?['user']?['user'];
+            print("context $context");
+            if (userData == null) {
+              return const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  child:
+                      Icon(Icons.error, color: Color.fromARGB(255, 2, 255, 36)),
+                ),
+              );
+            }
+
+            final profileImageUrl = userData['profile_image_url'];
+            final firstName = userData['first_name'] ?? 'User';
+
+            return Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: CircleAvatar(
+                    backgroundImage: profileImageUrl != null
+                        ? NetworkImage(profileImageUrl)
+                        : const AssetImage('assets/images/avator.png')
+                            as ImageProvider,
+                  ),
+                ),
+                const SizedBox(width: 8), // Add spacing
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                   
+                    Text('Hi $firstName',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 13, overflow: TextOverflow.ellipsis,)),
+                    // DropdownStatus(), // Your existing dropdown widget
+                  ],
+                ),
+              ],
+            );
+          },
         ),
         actions: const [
           Icon(Icons.notifications, color: Colors.white),

@@ -6,7 +6,6 @@ import 'package:blaemuya/customer/screens/customer_bottom_nav.dart';
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/professional/screens/bottom_nav.dart';
 import 'package:blaemuya/professional/screens/pHome.dart';
-import 'package:blaemuya/professional/screens/user.dart';
 import 'package:blaemuya/widgets/appBar_text.dart';
 import 'package:blaemuya/widgets/large_button.dart';
 import 'package:blaemuya/widgets/loading_indicator.dart';
@@ -33,7 +32,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void login() async {
     if (_formKey.currentState!.validate()) {
-   
+      // setState(() {
+      //   _isLoading = true;
+      // });
 
       final email = _emailController.text.trim();
       final password = _newPasswordController.text.trim();
@@ -279,7 +280,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            OnboardingScreenOne(),
+                                            OnboardingScreenThree(),
                                       ),
                                     );
                                   },
