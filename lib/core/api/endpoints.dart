@@ -3,4 +3,5 @@ class Endpoints {
   static const login = '/api/users/auth/login/';
   static const refreshToken = '/api/auth/token/refresh/';
   static const profile = '/api/users/profile/';
+  static const updateProfile = '/api/users/profile/update/';
 }

@@ -233,7 +233,7 @@ class _ProfessionalProfileState extends ConsumerState<ProfessionalProfile> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ProfileEdit(),
+                                      builder: (context) => ProfileEdit(userId: user["id"])
                                     ),
                                   );
                                 },

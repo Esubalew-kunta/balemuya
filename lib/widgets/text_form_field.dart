@@ -8,7 +8,6 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final void Function(String)? onChanged;
-  
 
   // Constructor
   const CustomTextFormField({
@@ -19,44 +18,38 @@ class CustomTextFormField extends StatelessWidget {
     required this.prefixIcon,
     this.validator,
     this.obscureText = false,
-     this.onChanged,
-  
-    
+    this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      // controller: controller,
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
       decoration: InputDecoration(
         filled: true,
         fillColor: const Color.fromRGBO(245, 245, 245, 1.0),
         border: OutlineInputBorder(
-          
           borderRadius: BorderRadius.circular(10),
         ),
         labelText: labelText,
         prefixIcon: Icon(prefixIcon),
         enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
-      borderSide: BorderSide(color: const Color.fromARGB(255, 222, 228, 233), width: 2), // Change color here
-    ),
-     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
-      borderSide: BorderSide(color: const Color.fromARGB(255, 198, 206, 212), width: 2), // Change color when focused
-    ),
-    
-    
-
-        
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+              color: const Color.fromARGB(255, 222, 228, 233),
+              width: 2), // Change color here
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+              color: const Color.fromARGB(255, 198, 206, 212),
+              width: 2), // Change color when focused
+        ),
       ),
       validator: validator,
-      onChanged: onChanged, 
+      onChanged: onChanged,
     );
   }
 }
-
-
-

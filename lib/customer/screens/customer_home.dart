@@ -44,7 +44,7 @@ class _CustomerHomeState extends ConsumerState<CustomerHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+    appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 0,
         leading: FutureBuilder(
@@ -66,48 +66,56 @@ class _CustomerHomeState extends ConsumerState<CustomerHome> {
                   child: Icon(Icons.home, color: Colors.white),
                 ),
               );
-            } 
+            }
 
-            // Ensure safe access to user data
+            // Extract user data safely
             final userData = snapshot.data?['user']?['user'];
-            print("context $context");
             if (userData == null) {
               return const Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: CircleAvatar(
                   backgroundColor: Colors.grey,
-                  child:
-                      Icon(Icons.error, color: Color.fromARGB(255, 2, 255, 36)),
+                  child: Icon(Icons.error, color: Color.fromARGB(255, 2, 255, 36)),
                 ),
               );
             }
 
             final profileImageUrl = userData['profile_image_url'];
-            final firstName = userData['first_name'] ?? 'User';
+            return Padding(
+              padding: const EdgeInsets.only(left: 6.0),
+              child: CircleAvatar(
+                backgroundImage: profileImageUrl != null
+                    ? NetworkImage(profileImageUrl)
+                    : const AssetImage('assets/images/avator.png')
+                        as ImageProvider,
+              ),
+            );
+          },
+        ),
+        title: FutureBuilder(
+          future: ref.watch(userControllerProvider).getUserProfile(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Text(
+                'Hi...',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
+            }
 
-            return Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: CircleAvatar(
-                    backgroundImage: profileImageUrl != null
-                        ? NetworkImage(profileImageUrl)
-                        : const AssetImage('assets/images/avator.png')
-                            as ImageProvider,
-                  ),
-                ),
-                const SizedBox(width: 8), // Add spacing
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                   
-                    Text('Hi $firstName',
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 13, overflow: TextOverflow.ellipsis,)),
-                    // DropdownStatus(), // Your existing dropdown widget
-                  ],
-                ),
-              ],
+            final userData = snapshot.data?['user']?['user'];
+            final firstName = userData?['first_name'] ?? 'User';
+
+            return Text(
+              'Hi $firstName',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 13,
+                overflow: TextOverflow.ellipsis,
+              ),
             );
           },
         ),
@@ -116,7 +124,7 @@ class _CustomerHomeState extends ConsumerState<CustomerHome> {
           SizedBox(width: 16),
         ],
       ),
-      body: SingleChildScrollView(
+       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
