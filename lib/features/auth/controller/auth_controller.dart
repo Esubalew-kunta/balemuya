@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final dioClient = DioClient(
     dio: Dio(),
-
     tokenStorage: TokenStorage(),
   );
   return AuthRepository(dioClient: dioClient);
@@ -23,10 +22,19 @@ class AuthController {
 
   AuthController(this._repository);
 
-  Future<Map<String, dynamic>> registerUser(Map<String, dynamic> userData) async {
-  return await _repository.registerUser(userData);
-}
+  Future<Map<String, dynamic>> registerUser(
+      Map<String, dynamic> userData) async {
+    return await _repository.registerUser(userData);
+  }
 
+  Future<String> logout() async {
+    try {
+      final response = await _repository.logoutUser();
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future<Map<String, dynamic>> loginUser(String email, String password) async {
     try {
@@ -39,6 +47,4 @@ class AuthController {
       rethrow; // Pass the error to the UI
     }
   }
-
- 
 }

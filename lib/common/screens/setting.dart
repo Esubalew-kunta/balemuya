@@ -1,9 +1,11 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:blaemuya/common/screens/login.dart';
+import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/appBar_text.dart';
+import 'package:blaemuya/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -17,10 +19,9 @@ class SettingsPage extends ConsumerWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
-
           },
         ),
-        title:CustomText("Setting"),
+        title: CustomText("Setting"),
         centerTitle: true,
       ),
       body: Column(
@@ -93,23 +94,42 @@ class SettingsPage extends ConsumerWidget {
                 ListTile(
                   title: Text('Log Out'),
                   trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false, // Prevent user from dismissing
+                      builder: (context) =>
+                          Center(child: CircularProgressIndicator()),
+                    );
+
+                    final response =
+                        await ref.read(authControllerProvider).logout();
+
+                    // Close the loading dialog
+                    Navigator.of(context).pop();
+
+                    // Show success message
+                    showCustomSnackBar(
+                      context,
+                      title: 'Logout',
+                      message: response,
+                      type: AnimatedSnackBarType.success,
+                    );
+
+                    // Navigate to login screen and clear navigation stack
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ),
+                          builder: (context) => const LoginScreen()),
+                      (route) => false,
                     );
                   },
                 ),
               ],
             ),
           ),
- 
         ],
       ),
     );
   }
-
-
 }

@@ -43,14 +43,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => const Center(child:LoadingIndicatorWidget()),
+          builder: (context) => const Center(child: LoadingIndicatorWidget()),
         );
 
         final response =
             await ref.read(authControllerProvider).loginUser(email, password);
 
         // Hide loading dialog
-           if(mounted) Navigator.pop(context);
+        if (mounted) Navigator.pop(context);
 
         // Show success snackbar with the response message
         AnimatedSnackBar.material(
@@ -70,30 +70,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           );
         } else if (userType == 'professional') {
-          
           showCustomSnackBar(
-          context,
-          title: 'Success',
-          message: "You've successfully logged in!",
-          type: AnimatedSnackBarType.success,
-        );
-         
+            context,
+            title: 'Success',
+            message: "You've successfully logged in!",
+            type: AnimatedSnackBarType.success,
+          );
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) =>  ProfessionalBottomBar(),
+              builder: (context) => ProfessionalBottomBar(),
             ),
           );
-        } 
-        else if (userType == 'admin') {
+        } else if (userType == 'admin') {
           showCustomSnackBar(
-          context,
-          title: 'info',
-          message: "Admin cannot login via mobile app",
-          type: AnimatedSnackBarType.info,
-        );
+            context,
+            title: 'info',
+            message: "Admin cannot login via mobile app",
+            type: AnimatedSnackBarType.info,
+          );
           return;
-       
         }
       } catch (e) {
         // Hide loading dialog

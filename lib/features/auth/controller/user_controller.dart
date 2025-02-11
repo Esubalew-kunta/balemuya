@@ -28,6 +28,26 @@ class UserController {
   return await _repository.getProfile();
 }
 
+// update current locatioin
+ Future<Map<String, dynamic>> updateCurrentLocation(
+      Map<String, dynamic> locationData) async {
+    return await _repository.updateLocation(locationData);
+  }
+//upload certificate
+ Future<Response> updateCertificate({required FormData updatedCertificate}) async {
+   print("Updated Certificate Fields:");
+  updatedCertificate.fields.forEach((field) {
+    print("${field.key}: ${field.value}");
+  });
+
+  // Print all files
+  print("Updated Certificate Files:");
+  updatedCertificate.files.forEach((file) {
+    print("${file.key}: ${file.value.filename}");
+  });
+    return await _repository.uploadCertificate(updatedCertificate);
+    
+  }
 
 //update profile
 Future<Map<String, dynamic>> updateUserProfile({

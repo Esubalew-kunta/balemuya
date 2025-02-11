@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:blaemuya/common/screens/setting.dart';
 import 'package:blaemuya/features/auth/controller/user_controller.dart';
+import 'package:blaemuya/professional/screens/certificate.dart';
 import 'package:blaemuya/professional/screens/varified_profile_edit.dart';
 import 'package:blaemuya/utils/colors.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,7 +21,33 @@ class ProfessionalProfile extends ConsumerStatefulWidget {
 }
 
 class _ProfessionalProfileState extends ConsumerState<ProfessionalProfile> {
-  @override
+  // String? _CertificateImagePath;
+
+  // void update() async {
+  //   if (_CertificateImagePath == null) {
+  //     print("No certificate image selected.");
+  //     return;
+  //   }
+
+  //   final updateCertificate = FormData.fromMap(
+  //       {'certificate_image': MultipartFile.fromFile(_CertificateImagePath!)});
+  //   print('updated one $updateCertificate');
+
+  //   try {
+  //     final response = await ref.read(userControllerProvider).updateCertificate(
+  //           updatedCertificate: updateCertificate,
+  //         );
+
+  //     if (response.statusCode == 201) {
+  //       print("Certificate uploaded successfully: ${response.data}");
+  //     } else {
+  //       print("Failed to upload certificate: ${response.statusMessage}");
+  //     }
+  //   } catch (e) {
+  //     print("Error uploading certificate: $e");
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -233,8 +261,8 @@ class _ProfessionalProfileState extends ConsumerState<ProfessionalProfile> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ProfileEdit(userId: user["id"])
-                                    ),
+                                        builder: (context) =>
+                                            ProfileEdit(userId: user["id"])),
                                   );
                                 },
                                 child: CircleAvatar(
@@ -300,68 +328,105 @@ class _ProfessionalProfileState extends ConsumerState<ProfessionalProfile> {
     );
   }
 
-  Widget CertificateWidget({required List<dynamic> certificatesList}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Certificates",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        certificatesList.isEmpty
-            ? Text("No certificates uploaded.",
-                style: TextStyle(color: Colors.black54))
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: certificatesList.length,
-                itemBuilder: (context, index) {
-                  // Ensure the item is a Map
-                  if (certificatesList[index] is Map) {
-                    final certificate =
-                        certificatesList[index] as Map<String, dynamic>;
+  // Widget CertificateWidget({required List<dynamic> certificatesList}) {
+  //   Future<void> pickCertificateImage() async {
+  //     print("Picking image...");
+  //     final pickedFile =
+  //         await ImagePicker().pickImage(source: ImageSource.gallery);
+  //     if (pickedFile != null) {
+  //       setState(() {
+  //         _CertificateImagePath = pickedFile.path;
+  //       });
+  //       print("Image selected: ${pickedFile.path}");
+  //       update(); // Trigger upload
+  //     } else {
+  //       print("No image selected");
+  //     }
+  //   }
 
-                    // Extract title and image URL
-                    final title = certificate['title'] ?? '-';
-                    final imageUrl = certificate['certificate_image_url'] ?? '';
+  //   print("Certificates List: $certificatesList"); // Debugging print
 
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 4),
-                            if (imageUrl.isNotEmpty)
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    8), // Optional rounded corners
-                                child: AspectRatio(
-                                  aspectRatio: 16 /
-                                      9, // Adjust for different aspect ratios
-                                  child: Image.network(
-                                    imageUrl,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    );
-                  } else {
-                    return Text("Invalid certificate data.");
-                  }
-                },
-              ),
-      ],
-    );
-  }
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           Text(
+  //             "Certificates",
+  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //           ),
+  //           InkWell(
+  //             onTap: () => pickCertificateImage(),
+  //             child: CircleAvatar(
+  //               radius: 20,
+  //               backgroundColor: primaryColor,
+  //               child: Icon(Icons.add, color: Colors.white),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 8),
+  //       certificatesList.isEmpty
+  //           ? Text(
+  //               "No certificates uploaded.",
+  //               style: TextStyle(color: Colors.black54),
+  //             )
+  //           : ListView.builder(
+  //               shrinkWrap: true,
+  //               physics: NeverScrollableScrollPhysics(),
+  //               itemCount: certificatesList.length,
+  //               itemBuilder: (context, index) {
+  //                 // Ensure data is a Map
+  //                 if (certificatesList[index] is Map<String, dynamic>) {
+  //                   final certificate =
+  //                       certificatesList[index] as Map<String, dynamic>;
+
+  //                   // Extract title and image URL
+  //                   final title = certificate['title'] ?? '-';
+  //                   final imageUrl = certificate['certificate_image_url'] ?? '';
+
+  //                   return Card(
+  //                     child: Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: Column(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         children: [
+  //                           Text(
+  //                             title,
+  //                             style: TextStyle(
+  //                                 fontSize: 16, fontWeight: FontWeight.bold),
+  //                           ),
+  //                           const SizedBox(height: 4),
+  //                           if (imageUrl.isNotEmpty)
+  //                             ClipRRect(
+  //                               borderRadius: BorderRadius.circular(
+  //                                   8), // Optional rounded corners
+  //                               child: AspectRatio(
+  //                                 aspectRatio: 16 /
+  //                                     9, // Adjust for different aspect ratios
+  //                                 child: Image.network(
+  //                                   imageUrl,
+  //                                   width: double.infinity,
+  //                                   fit: BoxFit.cover,
+  //                                   errorBuilder: (context, error, stackTrace) {
+  //                                     return Text("Failed to load image.");
+  //                                   },
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   );
+  //                 } else {
+  //                   return Text("Invalid certificate data.");
+  //                 }
+  //               },
+  //             ),
+  //     ],
+  //   );
+  // }
 
   List<String> IDImages = [];
 

@@ -60,12 +60,56 @@ class UserRepository {
         };
       }
     } on DioException catch (e) {
-      
       // Handle DioError exceptions (e.g., network issues, timeout, etc.)
       debugPrint('Profile update error: ${e.response?.data}');
       return {
         'success': false,
         'message': 'Error occurred: ${_ErrorMessage(e.response)}',
+      };
+    }
+  }
+
+  //upload certifificates
+
+  Future<Response> uploadCertificate(FormData updatedCertificate) async {
+    try {
+      final response = await dioClient.dio.post(Endpoints.updateCertificate,
+          data: updatedCertificate,
+          options: Options(headers: {'Content-Type': 'multipart/form-data'}));
+
+      return response;
+    } catch (e) {
+      print("Error uploading certificate: $e");
+      rethrow;
+    }
+  }
+//update current location
+
+  Future<Map<String, dynamic>> updateLocation(
+      Map<String, dynamic> locationData) async {
+    try {
+      final response = await dioClient.dio.put(
+        Endpoints.address,
+        data: locationData,
+      );
+
+      if (response.statusCode == 201) {
+        debugPrint('Location Update successful ${response.data}');
+        return {
+          "success": true,
+          "message": response.data["message"] ?? "location update successful",
+        };
+      } else {
+        return {
+          "success": false,
+          "message": _extractErrorMessage(response),
+        };
+      }
+    } on DioException catch (e) {
+      debugPrint('location update error: ${e.response?.data}');
+      return {
+        "success": false,
+        "message": _extractErrorMessage(e.response),
       };
     }
   }

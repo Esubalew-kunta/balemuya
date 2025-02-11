@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/features/auth/controller/user_controller.dart';
 import 'package:blaemuya/professional/screens/jobs/new_jobs.dart';
@@ -10,6 +11,8 @@ import 'package:blaemuya/widgets/small_button_dark.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ProfessionalHome extends ConsumerStatefulWidget {
   const ProfessionalHome({super.key});
@@ -19,6 +22,117 @@ class ProfessionalHome extends ConsumerStatefulWidget {
 }
 
 class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
+  String _locationMessage = "Getting location...";
+  String _country = "ethiopia";
+  String _locality = "am";
+  String _AdministrativeArea = "a";
+  double _latitude = 0.0;
+  double _longitude = 0.0;
+
+  // Function to fetch the current location and display it
+  Future<void> _getLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          // ignore: deprecated_member_use
+          desiredAccuracy: LocationAccuracy.high);
+
+      // Fetch area name from coordinates using reverse geocoding
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placemarks[0];
+
+      setState(() {
+        _latitude = position.latitude;
+        _longitude = position.longitude;
+        _AdministrativeArea = place.administrativeArea ?? "Unknown area";
+        _locality = place.locality ?? "Unknown locality";
+
+        _locationMessage = "$_locality, $_country";
+      });
+      final locationData = {
+        "country": _country,
+        "city": _locality,
+        "region": _AdministrativeArea,
+        "latitude": _latitude,
+        "longitude": _longitude,
+      };
+
+      // Call the controller (Now it returns a response)
+      final response = await ref
+          .read(userControllerProvider)
+          .updateCurrentLocation(locationData);
+      if (response.isNotEmpty) {
+        if (response["success"] == true) {
+          // Show success message
+          AnimatedSnackBar.material(
+            response["message"],
+            type: AnimatedSnackBarType.success,
+          ).show(context);
+        }
+      } else {
+        // Show error message
+        AnimatedSnackBar.material(
+          response["message"],
+          type: AnimatedSnackBarType.error,
+        ).show(context);
+      }
+      print(
+          'Locxx: $_latitude, $_longitude, $_country, $_locality, $_AdministrativeArea');
+    } catch (e) {
+      print("Error getting location: $e");
+      setState(() {
+        _locationMessage = "Unable to fetch location.";
+      });
+    }
+  }
+
+  void _updateLocation() async {
+    {
+      try {
+        final locationData = {
+          "country": _country,
+          "city": _locality,
+          "region": _AdministrativeArea,
+          "latitude": _latitude,
+          "longitude": _longitude,
+        };
+
+        // Call the controller (Now it returns a response)
+        final response = await ref
+            .read(userControllerProvider)
+            .updateCurrentLocation(locationData);
+
+        // Remove loading indicator
+        if (mounted) Navigator.pop(context);
+
+        if (response["success"] == true) {
+          // Show success message
+          AnimatedSnackBar.material(
+            response["message"],
+            type: AnimatedSnackBarType.success,
+          ).show(context);
+
+          // Redirect to login after 2 seconds
+        } else {
+          // Show error message
+          AnimatedSnackBar.material(
+            response["message"],
+            type: AnimatedSnackBarType.error,
+          ).show(context);
+        }
+      } catch (e) {
+        // Remove loading indicator
+        if (mounted) Navigator.pop(context);
+
+        // Show error snackbar
+        AnimatedSnackBar.material(
+          "An unexpected error occurred. Please try again.",
+          type: AnimatedSnackBarType.error,
+        ).show(context);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +168,8 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                 padding: EdgeInsets.only(left: 8.0),
                 child: CircleAvatar(
                   backgroundColor: Colors.grey,
-                  child: Icon(Icons.error, color: Color.fromARGB(255, 2, 255, 36)),
+                  child:
+                      Icon(Icons.error, color: Color.fromARGB(255, 2, 255, 36)),
                 ),
               );
             }
@@ -103,7 +218,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
           SizedBox(width: 16),
         ],
       ),
-       body: ListView(
+      body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           // Location Section
@@ -114,11 +229,14 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                 children: [
                   Icon(Icons.location_on, color: Colors.blue[900]),
                   const SizedBox(width: 8),
-                  const Text('Bahir Dar, poly'),
+                  Text(" $_locationMessage"),
                 ],
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  await _getLocation();
+                  // _updateLocation();
+                },
                 icon: const Icon(Icons.refresh, size: 16),
                 label: Text('Update location'),
                 style: ElevatedButton.styleFrom(
