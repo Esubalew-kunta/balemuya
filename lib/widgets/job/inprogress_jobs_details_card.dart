@@ -7,7 +7,7 @@ class InprogressJobsDetailsCard extends StatelessWidget {
   final String distance;
   final String description;
  
-  final Widget reportButton;
+  // final Widget reportButton;
  
   final Widget cancelButton;
 
@@ -18,7 +18,7 @@ class InprogressJobsDetailsCard extends StatelessWidget {
     required this.distance,
     required this.description,
     
-    required this.reportButton,
+    // required this.reportButton,
     required this.cancelButton,
   });
 
@@ -55,7 +55,7 @@ class InprogressJobsDetailsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
                Align(alignment: Alignment.bottomLeft, child: cancelButton),
-            Align(alignment: Alignment.centerRight, child: reportButton),
+            // Align(alignment: Alignment.centerRight, child: reportButton),
             ],
            )
           ],

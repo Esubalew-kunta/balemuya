@@ -11,13 +11,57 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InprogressJobs extends StatelessWidget {
+
+void showReportDialog(BuildContext context) {
+  TextEditingController complaintController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Submit Report'),
+        content: TextField(
+          controller: complaintController,
+          decoration: InputDecoration(
+            hintText: 'Enter your complaint',
+            border: OutlineInputBorder(),
+          ),
+          maxLines: 3,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+            },
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (complaintController.text.isNotEmpty) {
+                Navigator.pop(context); // Close dialog
+                showCustomSnackBar(
+            context,
+            title: 'Success',
+            message: "Report submitted successfully \n we will review it",
+            type: AnimatedSnackBarType.success,
+          );
+              }
+            },
+            child: Text('Submit'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        itemCount: 4,
+        itemCount: 2,
         
         itemBuilder: (context, index) {
           return InprogressJobCard(
@@ -25,6 +69,7 @@ class InprogressJobs extends StatelessWidget {
   urgency: "Urgent",
   time: "2 hr ago",
   distance: "2.5 km",
+  
   description: "Looking for an experienced plumber to fix a leaking pipe.",
   callButton: IconButton(
   icon: Icon(Icons.phone, color: Colors.green),
@@ -54,6 +99,12 @@ class InprogressJobs extends StatelessWidget {
                     },
                     child:
                         Text('Details', style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 131, 116, 116))),
+                  ), 
+                  reportButton: TextButton(
+                    onPressed: () {
+                       showReportDialog(context);            },
+                    child:
+                        Text('Report', style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 243, 33, 33))),
                   ), 
 );
 

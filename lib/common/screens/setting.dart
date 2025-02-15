@@ -1,5 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:blaemuya/common/screens/login.dart';
+import 'package:blaemuya/common/screens/provacy_policy.dart';
+import 'package:blaemuya/common/screens/terms_and_conditions.dart';
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/appBar_text.dart';
@@ -14,14 +16,6 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: CustomText("Setting"),
         centerTitle: true,
       ),
       body: Column(
@@ -31,7 +25,7 @@ class SettingsPage extends ConsumerWidget {
             margin: EdgeInsets.all(16),
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 158, 168, 209),
+              color: const Color.fromARGB(255, 236, 215, 253),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
@@ -52,7 +46,7 @@ class SettingsPage extends ConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Placeholder(),
+                        builder: (context) => PrivacyPolicy(),
                       ),
                     );
                   },
@@ -65,7 +59,7 @@ class SettingsPage extends ConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Placeholder(),
+                        builder: (context) => TermsAndPolicyPage(),
                       ),
                     );
                   },
@@ -78,7 +72,7 @@ class SettingsPage extends ConsumerWidget {
             margin: EdgeInsets.symmetric(horizontal: 16),
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 158, 168, 209),
+              color: const Color.fromARGB(255, 236, 215, 253),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),

@@ -1,6 +1,7 @@
 import 'package:blaemuya/professional/screens/jobs/applied_jobs.dart';
 import 'package:blaemuya/professional/screens/jobs/inprogress_jobs.dart';
 import 'package:blaemuya/professional/screens/jobs/new_jobs.dart';
+import 'package:blaemuya/professional/screens/jobs/professional_completed_jobs.dart';
 import 'package:blaemuya/professional/screens/jobs/requested_job.dart';
 import 'package:blaemuya/professional/screens/pHome.dart';
 import 'package:blaemuya/utils/colors.dart';
@@ -38,7 +39,7 @@ class _JobScreenState extends State<JobScreen>
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 69, 81, 131),
+              color: const Color.fromARGB(255, 182, 128, 226),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Align(
@@ -47,17 +48,12 @@ class _JobScreenState extends State<JobScreen>
                 controller: _tabController,
                 isScrollable: true,
                 labelColor: Colors.white,
-                unselectedLabelColor: Colors.grey,
-                labelStyle: TextStyle(
-                    fontWeight: FontWeight.bold), 
-                unselectedLabelStyle: TextStyle(
-                    fontWeight: FontWeight.normal),
+                unselectedLabelColor: const Color.fromARGB(255, 26, 26, 26),
+                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
                 indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(
-                      width: 3.0,
-                      color: Colors.white), 
-                  insets: EdgeInsets.symmetric(
-                      horizontal: 16), 
+                  borderSide: BorderSide(width: 3.0, color: Colors.white),
+                  insets: EdgeInsets.symmetric(horizontal: 16),
                 ),
                 tabs: const [
                   Tab(text: "New"),
@@ -78,6 +74,7 @@ class _JobScreenState extends State<JobScreen>
                 AppliedJobs(),
                 RequestedJob(),
                 InprogressJobs(),
+                ProfessionalCompletedJobs(),
               ],
             ),
           ),

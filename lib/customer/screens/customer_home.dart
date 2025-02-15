@@ -137,7 +137,7 @@ class _CustomerHomeState extends ConsumerState<CustomerHome> {
                   children: [
                     Icon(Icons.location_on, color: primaryColor),
                     const SizedBox(width: 8),
-                    const Text('Bahir Dar, poly'),
+                    const Text('Bahir Dar, Amhara'),
                   ],
                 ),
                 TextButton.icon(

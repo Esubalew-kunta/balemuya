@@ -24,24 +24,24 @@ class _MapsState extends State<Maps> {
       body: Stack(
         children: [
           // Google Map
-          // GoogleMap(
-          //   initialCameraPosition: CameraPosition(
-          //     target: _initialPosition,
-          //     zoom: 12,
-          //   ),
-          //   onMapCreated: (controller) {
-          //     setState(() {
-          //       _mapController = controller;
-          //     });
-          //   },
-          //   markers: {
-          //     Marker(
-          //       markerId: MarkerId('initial_position'),
-          //       position: _initialPosition,
-          //       infoWindow: InfoWindow(title: 'San Francisco'),
-          //     ),
-          //   },
-          // ),
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: _initialPosition,
+              zoom: 15,
+            ),
+            onMapCreated: (controller) {
+              setState(() {
+                _mapController = controller;
+              });
+            },
+            markers: {
+              Marker(
+                markerId: MarkerId('initial_position'),
+                position: _initialPosition,
+                infoWindow: InfoWindow(title: 'Your Location'),
+              ),
+            },
+          ),
 
           // Bottom Sheet
           DraggableScrollableSheet(
@@ -71,7 +71,7 @@ class _MapsState extends State<Maps> {
                      child: Column(
                       children: [
                         CustomerInfoCard(
-                name: "John Doe",
+                name: "Kebede Abebe",
                 imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SRRmhH4X5N2e4QalcoxVbzYsD44C-sQv-w&s",
                 rating: 4.5,
                 address: "Addis Ababa",

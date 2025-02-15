@@ -1,9 +1,11 @@
 
 import 'package:blaemuya/professional/professional_jobs_section.dart';
+import 'package:blaemuya/professional/professional_notifications.dart';
 import 'package:blaemuya/professional/screens/Professional_payment.dart';
 
 import 'package:blaemuya/professional/screens/pHome.dart';
 import 'package:blaemuya/professional/screens/professional_profile.dart';
+import 'package:blaemuya/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +24,7 @@ class _ProfessionalBottomBarState extends ConsumerState<ProfessionalBottomBar> {
     ProfessionalHome(),
     JobScreen(),
     ProfessionalProfile(),
-    Placeholder(),
+    ProfessionalNotifications(),
     ProfessionalPayment(),
     
 
@@ -67,7 +69,7 @@ class _ProfessionalBottomBarState extends ConsumerState<ProfessionalBottomBar> {
 
         selectedItemColor: Colors.brown, 
         unselectedItemColor: Colors.white, 
-        backgroundColor: const Color.fromRGBO(9, 15, 44, 1), 
+        backgroundColor:primaryColor, 
         selectedFontSize: 14, 
         unselectedFontSize: 10, 
         iconSize: 26, 

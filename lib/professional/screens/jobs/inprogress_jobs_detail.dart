@@ -31,7 +31,7 @@ class InprogressJobsDetail extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: InprogressJobsDetailsCard(
-                  reportButton: ElevatedButton(
+                  cancelButton: ElevatedButton(
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -51,8 +51,8 @@ class InprogressJobsDetail extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
 
                                   // Show the animated snackbar
                                   showCustomSnackBar(
@@ -82,65 +82,6 @@ class InprogressJobsDetail extends StatelessWidget {
                       backgroundColor: const Color.fromARGB(40, 218, 7, 7),
                       side: BorderSide(
                         color: const Color.fromARGB(99, 253, 0, 0),
-                      ),
-                      minimumSize: Size(100, 25),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: EdgeInsets.zero,
-                    ),
-                  ),
-                  cancelButton: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("Cancel Job"),
-                            content: Text(
-                                "Are you sure you want to cancel this job?"),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                },
-                                child: Text("No",
-                                    style: TextStyle(color: Colors.blue)),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-
-                                  // Show the animated snackbar
-                                  showCustomSnackBar(
-                                    context,
-                                    title: 'Cancelled',
-                                    message: "Job has been cancelled!",
-                                    type: AnimatedSnackBarType.error,
-                                  );
-                                },
-                                child: Text("Yes",
-                                    style: TextStyle(color: Colors.red)),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: Text(
-                      'Report',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(40, 255, 255, 255),
-                      side: BorderSide(
-                        color: const Color.fromARGB(98, 255, 253, 253),
                       ),
                       minimumSize: Size(100, 25),
                       shape: RoundedRectangleBorder(

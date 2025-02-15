@@ -7,7 +7,7 @@ import 'package:blaemuya/widgets/large_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class NearbyProfessionalProfileDetail extends StatelessWidget {
+class CustomerNotificationProfileView extends StatelessWidget {
   final String profileImageUrl =
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SRRmhH4X5N2e4QalcoxVbzYsD44C-sQv-w&s"; // Replace with actual image URL
   final String name = "Abebe Kebede";
@@ -18,7 +18,7 @@ class NearbyProfessionalProfileDetail extends StatelessWidget {
   final String Skills = "Plumbing";
   final String Bio = "I am skilled plumber with 5 years of experience";
 
-  NearbyProfessionalProfileDetail();
+  CustomerNotificationProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,43 +121,45 @@ class NearbyProfessionalProfileDetail extends StatelessWidget {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: TextButton(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: TextButton(
                     onPressed: () {
-                      Navigator.push(
+                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CustomerComment(),
+                          builder: (context) =>
+                              CustomerComment(), 
                         ),
                       );
+                      
                     },
-                    child: const Text('Previous Reviews',
-                        style: TextStyle(color: primaryColor)),
+                    child:
+                        const Text('Previous Reviews', style: TextStyle(color:primaryColor)),
                   ),
+              ),
+                  ],
                 ),
-              ],
-            ),
             SizedBox(height: 10),
             certificatesSection(context),
             SizedBox(height: 10),
             previousWorkSection(context),
-
+   
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LargeButton(
-                    onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => JobPostPage()),
-                        ),
-                    text: "Request"),
-              ],
-            )
+            // Row(
+            //   mainAxisAlignment:MainAxisAlignment.center,
+            //   children: [
+            //     LargeButton(
+            //   onTap: () => Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => JobPostPage()),
+            //   ),
+            //   text: "Request"),
+            //   ],
+            // )
+            
           ],
         ),
       ),
@@ -221,6 +223,7 @@ class NearbyProfessionalProfileDetail extends StatelessWidget {
     );
   }
 
+
   List<String> previousWorkImages =
       []; // List to store selected certificate images
 
@@ -261,3 +264,6 @@ class NearbyProfessionalProfileDetail extends StatelessWidget {
     );
   }
 }
+
+
+

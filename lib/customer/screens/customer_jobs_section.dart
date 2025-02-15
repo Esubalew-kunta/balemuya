@@ -43,7 +43,7 @@ class _CustomerJobsSectionState extends State<CustomerJobsSection>
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 69, 81, 131),
+              color:  const Color.fromARGB(255, 182, 128, 226),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Align(
@@ -52,7 +52,7 @@ class _CustomerJobsSectionState extends State<CustomerJobsSection>
                 controller: _tabController,
                 isScrollable: true,
                 labelColor: Colors.white,
-                unselectedLabelColor: Colors.grey,
+                unselectedLabelColor: const Color.fromARGB(255, 24, 24, 24),
                 labelStyle: TextStyle(fontWeight: FontWeight.bold),
                 unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
                 indicator: UnderlineTabIndicator(

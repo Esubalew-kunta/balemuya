@@ -11,26 +11,28 @@ class SubscriptionPlanSelectionPage extends ConsumerStatefulWidget {
 class _SubscriptionPlanSelectionPageState
     extends ConsumerState<SubscriptionPlanSelectionPage> {
   int selectedPlanIndex = 0;
-  int selectedDuration = 1; 
-  double pricePerMonth = 50.0; 
+  int selectedDuration = 1;
   double totalPrice = 0.0;
+
+  // Define prices for each plan per month
+  final List<double> planPrices = [90.0, 150.0, 190.0];
+
+  // Define number of jobs allowed for each plan
+  final List<int> planJobsLimit = [5, 10, 20];
+
+  // Define plan names
+  final List<String> planNames = ["Silver", "Gold", "Diamond"];
 
   @override
   void initState() {
     super.initState();
-    updatePrice(selectedPlanIndex); 
+    updatePrice(selectedPlanIndex);
   }
 
   void updatePrice(int index) {
     setState(() {
       selectedPlanIndex = index;
-      if (selectedDuration == 1) {
-        totalPrice = pricePerMonth;
-      } else if (selectedDuration == 3) {
-        totalPrice = pricePerMonth * 3;
-      } else if (selectedDuration == 6) {
-        totalPrice = pricePerMonth * 6;
-      }
+      totalPrice = planPrices[index] * selectedDuration;
     });
   }
 
@@ -69,13 +71,13 @@ class _SubscriptionPlanSelectionPageState
               child: Column(
                 children: [
                   SizedBox(height: 14.0),
-                  // Plan Selection Buttons (Make them equal in size)
+                  // Plan Selection Buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _buildPlanButton('Silver', 0),
                       _buildPlanButton('Gold', 1),
-                      _buildPlanButton('Premium', 2),
+                      _buildPlanButton('Diamond', 2),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -90,7 +92,8 @@ class _SubscriptionPlanSelectionPageState
                           updatePrice(selectedPlanIndex);
                         });
                       },
-                      items: [1, 3, 6, 12].map<DropdownMenuItem<int>>((int value) {
+                      items:
+                          [1, 3, 6, 12].map<DropdownMenuItem<int>>((int value) {
                         return DropdownMenuItem<int>(
                           value: value,
                           child: Text(
@@ -100,7 +103,32 @@ class _SubscriptionPlanSelectionPageState
                       }).toList(),
                     ),
                   ),
+
+                  SizedBox(height: 10),
+
+                  // Availability and Job Application Info
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "✔ You will be available on the platform for ${selectedDuration} months.",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(height: 6),
+                        Text(
+                          "✔ You can apply upto  ${planJobsLimit[selectedPlanIndex]} jobs.",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   SizedBox(height: 20),
+
                   // Price Summary
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -129,12 +157,10 @@ class _SubscriptionPlanSelectionPageState
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Per 1 month:'),
+                              Text('Per month:'),
                               Text(
-                                '${pricePerMonth.toStringAsFixed(2)} Birr',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
+                                '${planPrices[selectedPlanIndex].toStringAsFixed(2)} Birr',
+                                style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
@@ -156,7 +182,9 @@ class _SubscriptionPlanSelectionPageState
                       ),
                     ),
                   ),
+
                   SizedBox(height: 20),
+
                   // Payment Method
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -187,7 +215,7 @@ class _SubscriptionPlanSelectionPageState
                         ],
                       ),
                       child: Image.asset(
-                        'assets/images/chapa_logo (1).png', 
+                        'assets/images/chapa_logo (1).png',
                         height: 50,
                       ),
                     ),

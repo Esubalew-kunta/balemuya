@@ -89,7 +89,7 @@ class JobDetails extends StatelessWidget {
                 ),
               ),
               CustomerInfoCard(
-                name: "John Doe",
+                name: "Abebe Alemu",
                 imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SRRmhH4X5N2e4QalcoxVbzYsD44C-sQv-w&s",
                 rating: 4.5,
                 address: "Addis Ababa",

@@ -4,54 +4,6 @@ import 'package:blaemuya/widgets/appBar_text.dart';
 import 'package:flutter/material.dart';
 
 class ProfessionalPayment extends StatelessWidget {
-  void _showDepositDialog(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Deposit Money"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Enter the amount to deposit"),
-              TextFormField(
-                controller: controller,
-                decoration: InputDecoration(
-                  hintText: "Amount",
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value != null && value.isNotEmpty) {
-                    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                      return 'Please enter numbers only';
-                    }
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Submit"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,15 +14,7 @@ class ProfessionalPayment extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: CustomText('Payment history'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              _showDepositDialog(
-                  context); // Show the dialog when the icon is pressed
-            },
-          ),
-        ],
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -120,20 +64,20 @@ class ProfessionalPayment extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16),
-                    Text(
-                      "Total Balance",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      "500",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 122, 131, 167),
-                      ),
-                    ),
+                    // Text(
+                    //   "Total Balance",
+                    //   style:
+                    //       TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    // ),
+                    // SizedBox(height: 4),
+                    // Text(
+                    //   "500",
+                    //   style: TextStyle(
+                    //     fontSize: 24,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Color.fromARGB(255, 122, 131, 167),
+                    //   ),
+                    // ),
                     SizedBox(height: 8),
                     Align(
                       alignment: Alignment.bottomRight,
@@ -142,7 +86,8 @@ class ProfessionalPayment extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SubscriptionPlanSelectionPage(),
+                              builder: (context) =>
+                                  SubscriptionPlanSelectionPage(),
                             ),
                           );
                         },

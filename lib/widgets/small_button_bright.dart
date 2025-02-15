@@ -25,9 +25,9 @@ class SmallButtonBright extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 2),
           decoration: BoxDecoration(
-          color: isSelected ? const Color.fromARGB(255, 184, 188, 204) : Color.fromRGBO(9, 19, 58, 1),
+          color: isSelected ? const Color.fromARGB(255, 184, 188, 204) :primaryColor,
           border: Border.all(
-            color: const Color.fromRGBO(9, 19, 58, 1),
+            color:primaryColor,
             width: 1.5,
           ),
           borderRadius: const BorderRadius.all(Radius.circular(10)),

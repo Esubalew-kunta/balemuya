@@ -2,6 +2,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:blaemuya/common/screens/onboardingScreenOne.dart';
 import 'package:blaemuya/common/screens/onboardingScreenThree.dart';
 import 'package:blaemuya/common/screens/onboardingScreenTwo.dart';
+import 'package:blaemuya/common/screens/passwordResetByEmail.dart';
 import 'package:blaemuya/customer/screens/customer_bottom_nav.dart';
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/professional/screens/bottom_nav.dart';
@@ -70,12 +71,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           );
         } else if (userType == 'professional') {
-          showCustomSnackBar(
-            context,
-            title: 'Success',
-            message: "You've successfully logged in!",
-            type: AnimatedSnackBarType.success,
-          );
+          // showCustomSnackBar(
+          //   context,
+          //   title: 'Success',
+          //   message: "You've successfully logged in!",
+          //   type: AnimatedSnackBarType.success,
+          // );
 
           Navigator.pushReplacement(
             context,
@@ -237,7 +238,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const Placeholder(),
+                                    builder: (context) => const Passwordresetbyemail(),
                                   ),
                                 );
                               },

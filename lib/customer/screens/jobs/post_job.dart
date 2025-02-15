@@ -29,10 +29,12 @@ class _JobPostPageState extends State<JobPostPage> {
   bool isPickingLocation = false; // New variable to track if picking location
 
   final List<String> services = [
-    "Plumbing",
-    "Electrician",
-    "Painting",
-    "Cleaning"
+    "maintenance",
+    "education",
+    "cleaning",
+    "cooking",
+     "events",
+    "beauty"
   ];
 
   Future<void> _pickDateTime() async {

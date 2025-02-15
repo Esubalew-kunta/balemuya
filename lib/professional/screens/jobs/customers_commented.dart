@@ -40,7 +40,7 @@ class CustomersCommented extends StatelessWidget {
              SizedBox(
               width: double.infinity,
               child:  CustomersReviewsCard(
-                name: "John Doe",
+                name: "Kebede Abebe",
                 imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SRRmhH4X5N2e4QalcoxVbzYsD44C-sQv-w&s",
                 rating: 4.5,
                 Profession: 'Electrician',

@@ -11,6 +11,7 @@ class InprogressJobCard extends StatelessWidget {
    final Widget callButton;
    final Widget DirectionButton;
     final Widget detailButton;
+     final Widget reportButton;
 
   InprogressJobCard({
     required this.title,
@@ -19,6 +20,7 @@ class InprogressJobCard extends StatelessWidget {
     required this.distance,
     required this.description,
     required this.callButton,
+    required this.reportButton,
     required this.DirectionButton,
     required this.detailButton,
   });
@@ -64,6 +66,7 @@ class InprogressJobCard extends StatelessWidget {
                         Row(
                           children: [
                       Align(alignment: Alignment.centerRight, child: detailButton),
+                      Align(alignment: Alignment.centerRight, child: reportButton),
                           ],
                         ),
                   Row(

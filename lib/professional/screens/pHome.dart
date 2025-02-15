@@ -1,6 +1,9 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:blaemuya/features/auth/controller/auth_controller.dart';
 import 'package:blaemuya/features/auth/controller/user_controller.dart';
+import 'package:blaemuya/professional/screens/bottom_nav.dart';
+import 'package:blaemuya/professional/screens/jobs/inprogress_jobs_detail.dart';
+import 'package:blaemuya/professional/screens/jobs/job_details.dart';
 import 'package:blaemuya/professional/screens/jobs/new_jobs.dart';
 import 'package:blaemuya/utils/colors.dart';
 import 'package:blaemuya/widgets/large_job_card.dart';
@@ -22,7 +25,7 @@ class ProfessionalHome extends ConsumerStatefulWidget {
 }
 
 class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
-  String _locationMessage = "Getting location...";
+  String _locationMessage = "Bahir Dar ,Amhara";
   String _country = "ethiopia";
   String _locality = "am";
   String _AdministrativeArea = "a";
@@ -47,7 +50,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
         _AdministrativeArea = place.administrativeArea ?? "Unknown area";
         _locality = place.locality ?? "Unknown locality";
 
-        _locationMessage = "$_locality, $_country";
+        _locationMessage = "$_locality, $_AdministrativeArea";
       });
       final locationData = {
         "country": _country,
@@ -148,7 +151,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                 padding: EdgeInsets.only(left: 8.0),
                 child: CircleAvatar(
                   backgroundColor: Colors.grey,
-                  child: CircularProgressIndicator(),
+                  backgroundImage: AssetImage('assets/images/avator.png'),
                 ),
               );
             } else if (snapshot.hasError || snapshot.data == null) {
@@ -229,7 +232,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                 children: [
                   Icon(Icons.location_on, color: Colors.blue[900]),
                   const SizedBox(width: 8),
-                  Text(" $_locationMessage"),
+                  Text(" $_locationMessage "),
                 ],
               ),
               TextButton.icon(
@@ -287,7 +290,14 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                   description:
                       'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
                   actionButton: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobDetails(),
+                        ),
+                      );
+                    },
                     child: Text(
                       'Apply',
                       style: TextStyle(
@@ -315,7 +325,14 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                   description:
                       'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
                   actionButton: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobDetails(),
+                        ),
+                      );
+                    },
                     child: Text(
                       'Apply',
                       style: TextStyle(
@@ -345,7 +362,7 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Accepted',
+              Text('In Progress',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               TextButton.icon(
                 onPressed: () {},
@@ -369,7 +386,13 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                   description:
                       'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
                   actionButton: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InprogressJobsDetail()),
+                      );
+                    },
                     child:
                         Text('Details', style: TextStyle(color: Colors.blue)),
                   ),
@@ -382,7 +405,13 @@ class _ProfessionalHomeState extends ConsumerState<ProfessionalHome> {
                   description:
                       'Experienced plumber needed for immediate repair of a leaking pipe in a residential area. Tools and materials provided on-site.',
                   actionButton: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InprogressJobsDetail()),
+                      );
+                    },
                     child:
                         Text('Details', style: TextStyle(color: Colors.blue)),
                   ),
@@ -447,7 +476,7 @@ class HeroSection extends StatelessWidget {
       options: CarouselOptions(
         height: 200.0, // Set the height of the carousel
         autoPlay: true, // Enable automatic sliding
-        autoPlayInterval: Duration(seconds: 3), // Set the interval time
+        autoPlayInterval: Duration(seconds: 4), // Set the interval time
         enlargeCenterPage: true, // Highlight the current image
         viewportFraction: 0.87, // Show one image at a time
       ),

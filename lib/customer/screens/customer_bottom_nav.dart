@@ -2,7 +2,9 @@
 import 'package:blaemuya/customer/screens/customer_home.dart';
 import 'package:blaemuya/customer/screens/customer_jobs_list.dart';
 import 'package:blaemuya/customer/screens/customer_jobs_section.dart';
+import 'package:blaemuya/customer/screens/customer_notifications.dart';
 import 'package:blaemuya/customer/screens/customer_profile.dart';
+import 'package:blaemuya/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +22,7 @@ class _CustomerBottomNavState extends ConsumerState<CustomerBottomNav> {
     CustomerHome(),
     CustomerJobsList(),
     CustomerJobsSection(),
-    Placeholder(),
+    CustomerNotifications(),
     CustomerProfile(),
     
 
@@ -65,7 +67,7 @@ class _CustomerBottomNavState extends ConsumerState<CustomerBottomNav> {
 
         selectedItemColor: Colors.brown, 
         unselectedItemColor: Colors.white, 
-        backgroundColor: const Color.fromRGBO(9, 15, 44, 1), 
+        backgroundColor:primaryColor, 
         selectedFontSize: 14, 
         unselectedFontSize: 10, 
         iconSize: 26, 

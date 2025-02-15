@@ -27,7 +27,7 @@ class SmallButtonDark extends StatelessWidget {
           decoration: BoxDecoration(
           color: isSelected ? const Color.fromARGB(255, 184, 188, 204) : const Color.fromARGB(0, 255, 255, 255),
           border: Border.all(
-            color: const Color.fromRGBO(9, 19, 58, 1),
+            color:primaryColor,
             width: 1.5,
           ),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -36,7 +36,7 @@ class SmallButtonDark extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 13,
-              color: isSelected ? Colors.white : const Color.fromRGBO(9, 19, 58, 1),
+              color: isSelected ? Colors.white :primaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
